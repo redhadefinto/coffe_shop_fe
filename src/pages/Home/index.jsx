@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Footer from '../../components/Footer';
-import Header from '../../components/Header';
+import HeaderHome from '../../components/HeaderHome';
 import teamWork from '../../assets/Home/team-work-bg.webp'
 import iconCeklis from '../../assets/Home/icon/Ceklis.svg'
 import CardHome from '../../components/CardHome';
@@ -20,12 +20,12 @@ class Home extends Component {
   render() {
     return (
       <>
-        <Header />
+        <HeaderHome />
         <main className="font-rubik">
-          <section className="bg-home bg-center bg-cover bg-no-repeat min-h-[80vh] bg-fixed">
-            <div className="text-white bg-[rgba(0,0,0,.5)] min-h-[80vh]">
+          <section className="bg-home bg-center bg-cover bg-no-repeat min-h-[90vh] bg-fixed">
+            <div className="text-white bg-[rgba(0,0,0,.5)] min-h-[90vh]">
               <div className="font-bold flex flex-col justify-center pt-16 px-16 lg:h-[80vh] lg:pt-0 lg:pl-[10%]">
-                <h1 className="text-3xl mb-8 md:text-4xl">
+                <h1 className="text-3xl mb-4 md:text-4xl">
                   Start Your Day with <br /> Coffee and Good Meals
                 </h1>
                 <p className="text-base mb-12">
@@ -33,7 +33,7 @@ class Home extends Component {
                   meals made by love just for you. Start your day with us <br />{" "}
                   for a bigger smile!
                 </p>
-                <button className="pointer py-4 px-8 bg-btn-yellow w-[50%] self-center rounded-lg text-brown-cs text-xl lg:w-[30%] lg:self-start">
+                <button className="pointer py-4 px-8 bg-btn-yellow w-[60%] self-center rounded-lg text-brown-cs text-xl md:w-[40%] lg:w-[30%] lg:self-start">
                   Get Started
                 </button>
               </div>

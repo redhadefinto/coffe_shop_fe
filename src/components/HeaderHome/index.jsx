@@ -1,27 +1,23 @@
-import React, { Component } from "react";
-import Logo from "../../assets/Logo/logo-coffe.svg";
-import search from '../../assets/Header/search.svg'
-import iconChat from '../../assets/Header/chat.svg'
-import profile from '../../assets/Header/profile.svg'
+import React, { Component } from 'react'
+import Logo from '../../assets/Logo/logo-coffe.svg'
 
 
-
-class Header extends Component {
+export class HeaderHome extends Component {
   state = {
     isNavOpen: false,
   };
 
   toggleSidebar = () => {
-    console.log("msok");
-    if (this.state.isNavOpen === false) {
+    console.log('msok')
+    if(this.state.isNavOpen === false) {
       this.setState({
-        isNavOpen: true,
-      });
+        isNavOpen: true
+      })
       return;
     }
     this.setState({
-      isNavOpen: false,
-    });
+      isNavOpen: false
+    })
   };
 
   render() {
@@ -60,7 +56,7 @@ class Header extends Component {
               </label>
             </div>
             <nav className="flex-1 hidden lg:flex lg:w-full">
-              <ul className="flex gap-4 items-center justify-evenly w-full font-bold text-dark-blue-cs lg:relative lg:right-[20%]">
+              <ul className="flex gap-4 items-center justify-evenly w-full font-bold text-dark-blue-cs">
                 <li>
                   <a href="" className="">
                     Home
@@ -74,24 +70,13 @@ class Header extends Component {
               </ul>
             </nav>
             <section className="flex-1 hidden lg:block">
-              <div className="flex justify-between items-center">
-                <div className="flex justify-center items-center h-full bg-[#EFEEEE] w-[60%] py-2 px-4 rounded-xl gap-4">
-                  <img src={search} alt="" />
-                  <label htmlFor="">
-                    <input
-                      type="search"
-                      placeholder="search"
-                      className="bg-[#EFEEEE] active:border-none focus:border-none focus:outline-none w-full"
-                    />
-                  </label>
-                </div>
-                <div className="relative">
-                  <img src={iconChat} alt="" />
-                  <p className="absolute bg-brown-cs rounded-full w-[20px] h-[20px] flex justify-center items-center top-[-40%] right-[70%] text-white">
-                    1
-                  </p>
-                </div>
-                <img src={profile} alt="" className="rounded-full" />
+              <div className="flex gap-12 justify-end items-center">
+                <a className="" href="../Login/index.html">
+                  Login
+                </a>
+                <button className="py-2 px-6 bg-btn-yellow text-brown-cs rounded-xl font-semibold">
+                  <a href="./SignUp/index.html">SignUp</a>
+                </button>
               </div>
             </section>
           </div>
@@ -114,26 +99,13 @@ class Header extends Component {
               </ul>
             </nav>
             <section>
-              <div className="flex justify-between items-center flex-col gap-12 mt-8">
-                <div className="flex justify-center items-center h-full bg-[#EFEEEE] w-[60%] py-2 px-4 rounded-xl gap-4">
-                  <img src={search} alt="" />
-                  <label htmlFor="">
-                    <input
-                      type="search"
-                      placeholder="search"
-                      className="bg-[#EFEEEE] active:border-none focus:border-none focus:outline-none w-[100%] text-dark-blue-cs"
-                    />
-                  </label>
-                </div>
-                <div className="flex gap-12">
-                  <div className="relative bg-white">
-                    <img src={iconChat} alt="" />
-                    <p className="absolute bg-brown-cs rounded-full w-[20px] h-[20px] flex justify-center items-center top-[-40%] right-[70%] text-white">
-                    1
-                    </p>
-                  </div>
-                <img src={profile} alt="" className="rounded-full" />
-                </div>
+              <div className="flex items-center justify-center mt-12 gap-28 font-bold text-xl">
+                <a className="" href="../Login/index.html">
+                  Login
+                </a>
+                <button className="py-2 px-6 bg-btn-yellow text-brown-cs rounded-xl font-semibold">
+                  <a href="./SignUp/index.html">SignUp</a>
+                </button>
               </div>
             </section>
           </div>
@@ -145,5 +117,4 @@ class Header extends Component {
   }
 }
 
-
-export default Header
+export default HeaderHome
