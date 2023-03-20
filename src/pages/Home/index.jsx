@@ -43,26 +43,26 @@ class Home extends Component {
             <div className="container-branding">
               <div className="box-info relative min-h-[150px] flex justify-center">
                 <div
-                  className="flex bg-white w-[80%] absolute top-[-30%] px-8 py-4 rounded-xl"
+                  className="flex bg-white w-[80%] absolute top-[-30%] px-8 py-4 rounded-xl lg:w-[70%] lg:top-[-50%]"
                   style={{
                     boxShadow:
-                      "rgba(0, 0, 0, 0.5) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;",
+                      "rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px",
                   }}>
-                  <div className="container-staf flex-1 flex flex-col justify-center items-center">
+                  <div className="container-staf flex-1 flex flex-col justify-center items-center lg:flex-row lg:gap-4 lg:py-8 ">
                     <div className="bg-btn-yellow w-[50px] h-[50px] rounded-full bg-icon-contact bg-center bg-no-repeat flex"></div>
                     <div className="text-center">
                       <h3 className="font-bold mt-1">90+</h3>
                       <p className="text-grey-custom text-base">Staff</p>
                     </div>
                   </div>
-                  <div className="container-staf flex-1 flex flex-col justify-center items-center">
+                  <div className="container-staf flex-1 flex flex-col justify-center items-center lg:flex-row lg:gap-4 lg:py-8 ">
                     <div className="bg-btn-yellow w-[50px] h-[50px] rounded-full bg-icon-location bg-center bg-no-repeat flex"></div>
                     <div className="text-center">
                       <h3 className="font-bold mt-1">30+</h3>
                       <p className="text-grey-custom text-base">Stores</p>
                     </div>
                   </div>
-                  <div className="container-staf flex-1 flex flex-col justify-center items-center">
+                  <div className="container-staf flex-1 flex flex-col justify-center items-center lg:flex-row lg:gap-4 lg:py-8 ">
                     <div className="bg-btn-yellow w-[50px] h-[50px] rounded-full bg-icon-heart bg-center bg-no-repeat flex"></div>
                     <div className="text-center">
                       <h3 className="font-bold mt-1">800+</h3>
@@ -73,7 +73,7 @@ class Home extends Component {
               </div>
               <div className="body-branding">
                 <div className="flex flex-col px-6 text-grey-custom mb-20 md:flex-row md:gap-4 md:px-8 lg:px-20 xl:gap-12">
-                  <div className="logo-branding">
+                  <div className="logo-branding flex items-center justify-center">
                     <img
                       src={teamWork}
                       alt="logo-branding"
@@ -147,10 +147,10 @@ class Home extends Component {
           <section className="product mb-20">
             <div className="container-product px-6 text-grey-custom md:px-8 lg:px-20">
               <div className="product-header">
-                <h2 className="text-2xl font-bold mb-2 text-dark-blue-cs md:text-center">
+                <h2 className="text-2xl font-bold mb-4 text-dark-blue-cs text-center">
                   Here is People s Favorite
                 </h2>
-                <p className="text-base mb-20 md:text-center">
+                <p className="text-base mb-28 text-center">
                   Lets choose and have a bit taste of poeples favorite. It might
                   be yours too!
                 </p>
@@ -258,7 +258,12 @@ class Home extends Component {
                 </p>
               </div>
               <div className="body-customer w-full grid grid-cols-1 justify-center lg:grid-cols-3 lg:gap-4">
-                <div className="border px-6 py-8 w-[90%] lg:w-[100%]">
+                <div
+                  className="px-6 py-8 w-[90%] m-auto rounded-lg md:w-[70%] lg:w-[100%]"
+                  style={{
+                    boxShadow:
+                      "rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px",
+                  }}>
                   <div className="">
                     <div className="flex gap-4 mb-6">
                       <div className="container-img-card">
@@ -270,7 +275,7 @@ class Home extends Component {
                         </h3>
                         <p className="info-card-description">Warsaw, Poland</p>
                       </div>
-                      <div className="flex gap-4 justify-end">
+                      <div className="flex gap-2 justify-end">
                         <p className="text-dark-blue-cs font-bold">4.5</p>
                         <div className="image-star">
                           <img
@@ -315,14 +320,14 @@ class Home extends Component {
             </div>
             <section className="h-[15rem] lg:flex-[1]">
               <section
-                className="relative flex flex-col justify-center items-center py-8 px-4 w-[80%] m-auto bg-white rounded-2xl gap-2 md:flex-row lg:py-12 lg:px-16 lg:w-[90%]"
+                className="relative flex flex-col justify-center items-center py-8 px-4 w-[90%] m-auto bg-white rounded-2xl gap-2 md:flex-row md:py-8 md:px-12 lg:py-12 lg:px-16 lg:w-[90%]"
                 style={{
                   boxShadow:
-                    "rgba(50, 50, 93, 0.5) 0px 6px 12px -2px, rgba(0, 0, 0, 0.7) 0px 3px 7px -3px;",
+                    "rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px",
                 }}>
                 <div className="flex-1 flex flex-col gap-2">
                   <h2 className="title card-title lg:text-2xl lg:font-bold lg:text-dark-blue-cs">
-                    Check our promo <br className='hidden lg:block' /> today!
+                    Check our promo <br className="hidden lg:block" /> today!
                   </h2>
                   <p className="description card-description lg:text-grey-custom lg:font-semibold">
                     lets join with our member and enjoy the deals.

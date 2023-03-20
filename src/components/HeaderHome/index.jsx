@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Logo from '../../assets/Logo/logo-coffe.svg'
-
+import { Link } from 'react-router-dom';
 
 export class HeaderHome extends Component {
   state = {
@@ -26,11 +26,13 @@ export class HeaderHome extends Component {
         <header className="sticky top-0 bg-white border-b-2 border-solid z-50 font-rubik px-6 md:px-8 lg:px-20">
           <div className="flex py-4 lg:py-6">
             <section className="flex-1">
-              <div className="flex flex-1 content-center text-center gap-2">
-                <img src={Logo} alt="logo-coffe" />
-                <h1 className="font-bold pt-1 text-dark-blue-cs text-xl lg:text-2xl">
-                  Coffe Shop
-                </h1>
+              <div>
+                <Link className="flex flex-1 content-center text-center gap-2">
+                  <img src={Logo} alt="logo-coffe" />
+                  <h1 className="font-bold pt-1 text-dark-blue-cs text-xl lg:text-2xl">
+                    Coffe Shop
+                  </h1>
+                </Link>
               </div>
             </section>
             <div className="flex-1 flex justify-end lg:hidden">
@@ -55,27 +57,32 @@ export class HeaderHome extends Component {
                 </svg>
               </label>
             </div>
-            <nav className="flex-1 hidden lg:flex lg:w-full">
-              <ul className="flex gap-4 items-center justify-evenly w-full font-bold text-dark-blue-cs">
+            <nav className="flex-[2] hidden lg:flex">
+              <ul className="flex gap-8 items-center justify-center w-full font-bold text-dark-blue-cs xl:gap-12">
                 <li>
-                  <a href="" className="">
+                  {/* <a href="" className="">
                     Home
-                  </a>
+                  </a> */}
+                  <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a href="">Product</a>
+                  <Link to="/products">Products</Link>
                 </li>
                 <li>Your Cart</li>
-                <li className="text-amber-700 cursor-pointer">History</li>
+                <li>
+                  <Link to="/history">History</Link>
+                </li>
               </ul>
             </nav>
             <section className="flex-1 hidden lg:block">
-              <div className="flex gap-12 justify-end items-center">
-                <a className="" href="../Login/index.html">
+              <div className="flex gap-12 justify-end items-center font-bold">
+                <Link to="/login" className="text-dark-blue-cs">
                   Login
-                </a>
+                </Link>
                 <button className="py-2 px-6 bg-btn-yellow text-brown-cs rounded-xl font-semibold">
-                  <a href="./SignUp/index.html">SignUp</a>
+                  <Link to="/signUp" className="w-full h-full block">
+                    Sign Up
+                  </Link>
                 </button>
               </div>
             </section>
@@ -100,11 +107,13 @@ export class HeaderHome extends Component {
             </nav>
             <section>
               <div className="flex items-center justify-center mt-12 gap-28 font-bold text-xl">
-                <a className="" href="../Login/index.html">
+                <Link to="/login" className="text-dark-blue-cs">
                   Login
-                </a>
+                </Link>
                 <button className="py-2 px-6 bg-btn-yellow text-brown-cs rounded-xl font-semibold">
-                  <a href="./SignUp/index.html">SignUp</a>
+                  <Link to="/signUp" className="w-full h-full block">
+                    Sign Up
+                  </Link>
                 </button>
               </div>
             </section>

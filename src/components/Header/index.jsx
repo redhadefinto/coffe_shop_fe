@@ -3,7 +3,7 @@ import Logo from "../../assets/Logo/logo-coffe.svg";
 import search from '../../assets/Header/search.svg'
 import iconChat from '../../assets/Header/chat.svg'
 import profile from '../../assets/Header/profile.svg'
-
+import { Link } from "react-router-dom";
 
 
 class Header extends Component {
@@ -30,11 +30,13 @@ class Header extends Component {
         <header className="sticky top-0 bg-white border-b-2 border-solid z-50 font-rubik px-6 md:px-8 lg:px-20">
           <div className="flex py-4 lg:py-6">
             <section className="flex-1">
-              <div className="flex flex-1 content-center text-center gap-2">
-                <img src={Logo} alt="logo-coffe" />
-                <h1 className="font-bold pt-1 text-dark-blue-cs text-xl lg:text-2xl">
-                  Coffe Shop
-                </h1>
+              <div>
+                <Link className="flex flex-1 content-center text-center gap-2" to="/">
+                  <img src={Logo} alt="logo-coffe" />
+                  <h1 className="font-bold pt-1 text-dark-blue-cs text-xl lg:text-2xl">
+                    Coffe Shop
+                  </h1>
+                </Link>
               </div>
             </section>
             <div className="flex-1 flex justify-end lg:hidden">
@@ -59,21 +61,21 @@ class Header extends Component {
                 </svg>
               </label>
             </div>
-            <nav className="flex-1 hidden lg:flex lg:w-full">
-              <ul className="flex gap-4 items-center justify-evenly w-full font-bold text-dark-blue-cs lg:relative lg:right-[20%]">
+            <nav className="flex-[2] hidden lg:flex lg:w-full">
+              <ul className="flex gap-4 items-center justify-evenly w-full font-bold text-dark-blue-cs lg:relative">
                 <li>
-                  <a href="" className="">
-                    Home
-                  </a>
+                  <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a href="">Product</a>
+                  <Link to="/products">Products</Link>
                 </li>
                 <li>Your Cart</li>
-                <li className="text-amber-700 cursor-pointer">History</li>
+                <li>
+                  <Link to="/history">History</Link>
+                </li>
               </ul>
             </nav>
-            <section className="flex-1 hidden lg:block">
+            <section className="flex-[2] hidden lg:block">
               <div className="flex justify-between items-center">
                 <div className="flex justify-center items-center h-full bg-[#EFEEEE] w-[60%] py-2 px-4 rounded-xl gap-4">
                   <img src={search} alt="" />
@@ -91,7 +93,9 @@ class Header extends Component {
                     1
                   </p>
                 </div>
+                <Link to="/profile">
                 <img src={profile} alt="" className="rounded-full" />
+                </Link>
               </div>
             </section>
           </div>
@@ -129,10 +133,10 @@ class Header extends Component {
                   <div className="relative bg-white">
                     <img src={iconChat} alt="" />
                     <p className="absolute bg-brown-cs rounded-full w-[20px] h-[20px] flex justify-center items-center top-[-40%] right-[70%] text-white">
-                    1
+                      1
                     </p>
                   </div>
-                <img src={profile} alt="" className="rounded-full" />
+                  <img src={profile} alt="" className="rounded-full" />
                 </div>
               </div>
             </section>
