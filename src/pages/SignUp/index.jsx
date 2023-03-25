@@ -4,7 +4,7 @@ import Footer from "../../components/Footer";
 import background from "../../assets/login/background.webp";
 import logo from "../../assets/Logo/logo-coffe.svg";
 import google from "../../assets/Medsos/google.svg";
-
+import { Link } from "react-router-dom";
 
 export class SignUp extends Component {
   render() {
@@ -25,13 +25,13 @@ export class SignUp extends Component {
                     </h1>
                   </div>
                   <div className="flex-1 justify-end flex pr-8 py-4 md:pr-12">
-                    <button className="bg-btn-yellow text-brown-cs py-2 px-8 rounded-2xl hover:cursor-pointer hover:bg-brown-cs hover:text-white">
-                      <a href="">Sign up</a>
-                    </button>
+                    <Link className="bg-btn-yellow text-brown-cs py-2 px-8 rounded-2xl hover:cursor-pointer hover:bg-brown-cs hover:text-white" to="/login">
+                      Login
+                    </Link>
                   </div>
                 </div>
                 <div className="form text-white flex flex-col items-center py-8 gap-4 lg:text-grey-custom">
-                  <h1 className="text-3xl font-bold mb-8">Login</h1>
+                  <h1 className="text-3xl font-bold mb-8">Sign Up</h1>
                   <form className="w-full px-12 md:flex md:flex-col md:w-[70%] lg:w-[80%]">
                     <p className="mb-2 font-semi text-start">
                       Email Adress :{" "}
@@ -59,11 +59,10 @@ export class SignUp extends Component {
                       id="password"
                     />
                     <p className="mt-4 mb-8" id="password-error"></p>
-                    <button
-                      className="bg-btn-yellow text-brown-cs mb-4 font-bold w-full py-3 text-xl px-8 rounded-2xl hover:cursor-pointer hover:bg-[#a18818] hover:text-white"
-                      id="btn-login">
-                      <a>Login</a>
-                    </button>
+                    <Link
+                      className="bg-btn-yellow text-brown-cs mb-4 font-bold w-full py-3 text-xl px-8 rounded-2xl hover:cursor-pointer hover:bg-[#a18818] hover:text-white" to="login" >
+                        Login
+                    </Link>
                   </form>
                   {/* <br /> */}
                   <button
@@ -71,7 +70,7 @@ export class SignUp extends Component {
                     style={{ boxShadow: "0px 6px 20px 0px #C4C4C4AB" }}>
                     <img src={google} alt="" />
                     <a href="" className="font-bold text-lg">
-                      Login with Google
+                      Sign Up with Google
                     </a>
                   </button>
                 </div>

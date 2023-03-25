@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export class CardProduct extends Component {
+class CardProduct extends Component {
   constructor(props) {
     super(props)
   }
@@ -15,7 +15,10 @@ export class CardProduct extends Component {
           }}>
           <div className="relative flex justify-center min-h-[50px]">
             <div
-              className={`w-[100px] h-[100px] bg-yellow-300 rounded-full absolute top-[-100%]`}>
+              className={`w-[100px] h-[100px] rounded-full bg-center bg-cover absolute top-[-100%]`}
+              style={{
+                backgroundImage: `url('${this.props.img}')`,
+              }}>
               <div
                 className="absolute right-[-30%] top-[0%] bg-white rounded-xl font-bold"
                 style={{
@@ -34,7 +37,9 @@ export class CardProduct extends Component {
           </div>
           <div className="card-body text-center font-bold flex flex-col">
             <h4 className="cardTitle text-xl">{this.props.name}</h4>
-            <p className="cardPrice text-brown-cs flex items-end justify-center">{this.props.price}</p>
+            <p className="cardPrice text-brown-cs flex items-end justify-center">
+              IDR {this.props.price}
+            </p>
           </div>
         </div>
       </div>

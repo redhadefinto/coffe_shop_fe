@@ -1,6 +1,9 @@
 import React, {Component } from "react";
 import logo from "../../assets/logo.svg";
 import "../../styles/App.css";
+import { getProducts } from '../../utils/https/Products'
+
+import withNavigate from "../../utils/wrapper/WithNavigate";
 
 class App extends Component {
   // state merupakan variabel local dari kelas object
@@ -16,27 +19,34 @@ class App extends Component {
     this.controller = new AbortController()
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // bisa jalankan side efek/ fetch
-    fetch("https://jsonplaceholder.typicode.com/users", {
-      signal: this.controller.signal
-    }).then((res) => {
-      if(!res.ok) throw res.status;
-      return res.json()
-  }).then((data) => {
-    this.setState({
-    data,
-    })
-  })
-    .catch(err => {
-      if(this.controller.signal.aborted) return;
-      console.log(err.message)
-    })
+    // fecthUsers(this.controller)
+    //   .then((res) => {
+    //     if (!res.ok) throw res.status;
+    //     return res.json();
+    //   })
+    //   .then((data) => {
+    //     this.setState({
+    //       data,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     if (this.controller.signal.aborted) return;
+    //     console.log(err.message);
+    //   });
+    await getProducts(this.controller).then(({data}) => this.setState({
+      data: data.data
+    })).catch(err => console.log(err));
   }
   componentWillUnmount() {
     () => this.controller.abort()
   }
   
+
+  handleNavigate(to) {
+    this.props.navigate(to)
+  }
 
   changeCounter = () => {
     this.setState({
@@ -63,10 +73,14 @@ class App extends Component {
             <p>Counter: {this.state.counter}</p>
             <button onClick={this.changeCounter}>Change Counter</button>
           </div>
+          <div>
+            <button onClick={() => this.handleNavigate("/")}>Go Home</button>
+          </div>
         </header>
       </div>
     );
   }
 }
 
-export default App;
+const AppWithNavigate = withNavigate(App)
+export default AppWithNavigate;

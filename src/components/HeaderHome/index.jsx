@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Logo from '../../assets/Logo/logo-coffe.svg'
 import { Link } from 'react-router-dom';
 
-export class HeaderHome extends Component {
+class HeaderHome extends Component {
   state = {
     isNavOpen: false,
   };

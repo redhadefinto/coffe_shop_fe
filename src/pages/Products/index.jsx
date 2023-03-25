@@ -3,12 +3,152 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import CardPromo from '../../components/CardPromo';
 import CardProduct from '../../components/CardProduct'
+import WithSearchParams from '../../utils/wrapper/WithSearchParams'
+import { getProducts } from '../../utils/https/Products'
+import Loaders from '../../components/Loaders/'
+import _ from 'lodash'
+// import Loaders from '../../components/Loaders/index';
+import withNavigate from "../../utils/wrapper/WithNavigate";
+import '../../styles/products.css';
 
-export class Products extends Component {
+class Products extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      data: [],
+    };
+    this.controller = new AbortController();
+  }
+  paramsCoffe = () => {
+    this.props.setSearchParams({
+      categories: 1,
+    });
+  };
+  paramsFavorite = () => {
+    this.props.setSearchParams({
+      categories: "",
+    });
+  };
+  paramsNonCoffe = () => {
+    this.props.setSearchParams({
+      categories: 2,
+    });
+  };
+  paramsFoods = () => {
+    this.props.setSearchParams({
+      categories: 3,
+    });
+  };
+  paramsAddOn = () => {
+    this.props.setSearchParams({
+      categories: 4,
+    });
+  };
+  categoriesRequest = (event) => {
+    let target = event.target.value;
+    if (target == 0) {
+      this.props.setSearchParams({
+        categories: "",
+      });
+      return;
+    }
+    if (target == 1) {
+      this.props.setSearchParams({
+        categories: 1,
+      });
+    }
+    if (target == 2) {
+      this.props.setSearchParams({
+        categories: 2,
+      });
+    }
+    if (target == 3) {
+      this.props.setSearchParams({
+        categories: 3,
+      });
+    }
+    if (target == 4) {
+      this.props.setSearchParams({
+        categories: 4,
+      });
+    }
+  };
+  sortingRequest = (event) => {
+    let target = event.target.value;
+    if(target == "default") {
+      this.props.setSearchParams({
+        order: "",
+      })
+    }
+    if(target == "priciest") {
+      this.props.setSearchParams({
+        order: "priciest",
+      });
+    }
+    if(target == "cheapest") {
+      this.props.setSearchParams({
+        order: "cheapest",
+      });
+    }
+  }
+  handleNavigate(to) {
+    this.props.navigate(to);
+  }
+
+  handleSearch = (value) => {
+    this.props.setSearchParams({
+      name: value
+    })
+  }
+  async componentDidUpdate(prevProps) {
+    const prevSearchParams = Object.fromEntries(prevProps.searchParams);
+    const currentSearchParams = Object.fromEntries(this.props.searchParams);
+    if (!_.isEqual(prevSearchParams, currentSearchParams)) {
+      this.setState({
+        isLoading: true,
+      });
+      await getProducts(this.controller, this.props.searchParams)
+        .then(({ data }) =>
+          this.setState({
+            // isLoading: true,
+            data: data.data,
+          })
+          // console.log(data.data)
+        )
+        .catch((err) => console.log(err))
+        .finally(() =>
+          this.setState({
+            isLoading: false,
+          })
+        );
+    }
+    // console.log("No Change");
+  }
+  async componentDidMount() {
+    // function fecthData = () => {}
+    this.setState({
+      isLoading: true,
+    });
+    await getProducts(this.controller, this.props.searchParams)
+      .then(({ data }) =>
+        this.setState({
+          // isLoading: true,
+          data: data.data,
+        })
+      )
+      .catch((err) => console.log(err))
+      .finally(() =>
+        this.setState({
+          isLoading: false,
+        })
+      );
+  }
   render() {
+    // console.log(Object.fromEntries(this.props.searchParams));
     return (
       <>
-        <Header />
+        <Header searchValue={this.handleSearch} />
         <main>
           <div className="lg:flex">
             {/* <!-- section left --> */}
@@ -27,21 +167,25 @@ export class Products extends Component {
                         title="HAPPY MOTHER’S DAY!"
                         desc="Get one of our favorite menu for free!"
                         bg="bg-[#88B788]"
+                        profile="bg-promo-1"
                       />
                       <CardPromo
                         title="HAPPY MOTHER’S DAY!"
                         desc="Get one of our favorite menu for free!"
                         bg="bg-[#F5C361]"
+                        profile="bg-promo-2"
                       />
                       <CardPromo
                         title="HAPPY MOTHER’S DAY!"
                         desc="Get one of our favorite menu for free!"
                         bg="bg-[#88B788]"
+                        profile="bg-promo-1"
                       />
                       <CardPromo
                         title="HAPPY MOTHER’S DAY!"
                         desc="Get one of our favorite menu for free!"
                         bg="bg-[#C59378]"
+                        profile="bg-promo-4"
                       />
                     </div>
                     <div className="w-full flex justify-center mt-4">
@@ -66,65 +210,76 @@ export class Products extends Component {
             </div>
             <hr className="hidden lg:block" />
             {/* <!-- section right --> */}
-            <div className="container-product px-6 md:px-8 lg:px-4">
+            <div className="w-full px-6 md:px-8 lg:px-4">
               <section className="product">
                 <nav className="promoNav mb-28">
                   <div className="flex justify-center lg:hidden">
                     <select
                       name="menu-favorite"
                       id=""
-                      className="border-b-2 border-solid border-brown-cs cursor-pointer font-semibold text-brown-cs">
-                      <option value="">Favorite & Promo</option>
-                      <option value="">Coffe</option>
-                      <option value="">Non Coffe</option>
-                      <option value="">Foods</option>
-                      <option value="">Add-on</option>
+                      className="border-b-2 border-solid border-brown-cs cursor-pointer font-semibold text-brown-cs"
+                      onChange={this.categoriesRequest}>
+                      <option value="0">Favorite & Promo</option>
+                      <option value="1">Coffe</option>
+                      <option value="2">Non Coffe</option>
+                      <option value="3">Foods</option>
+                      <option value="4">Add-on</option>
                     </select>
                   </div>
                   <ul className="hidden lg:flex lg:justify-around lg:pt-8 lg:text-[#9F9F9F]">
-                    <li className="">Favorite & Promo</li>
-                    <li>Coffee</li>
-                    <li>Non Coffee</li>
-                    <li>Foods</li>
-                    <li>Add-on</li>
+                    <li
+                      className="cursor-pointer"
+                      onClick={this.paramsFavorite}>
+                      Favorite & Promo
+                    </li>
+                    <li className="cursor-pointer" onClick={this.paramsCoffe}>
+                      Coffee
+                    </li>
+                    <li
+                      className="cursor-pointer"
+                      onClick={this.paramsNonCoffe}>
+                      Non Coffee
+                    </li>
+                    <li className="cursor-pointer" onClick={this.paramsFoods}>
+                      Foods
+                    </li>
+                    <li className="cursor-pointer" onClick={this.paramsAddOn}>
+                      Add-on
+                    </li>
                   </ul>
+                  <div>
+                    <select
+                      className="border-b-2 border-solid border-brown-cs cursor-pointer font-semibold text-brown-cs"
+                      onChange={this.sortingRequest} defaultValue="default">
+                      <option value="default">Default</option>
+                      <option value="priciest">priciest</option>
+                      <option value="cheapest">cheapest</option>
+                    </select>
+                  </div>
                 </nav>
                 <div className="grid grid-cols-2 mb-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-4 xl:gap-0">
-                  <CardProduct
-                    name="Veggie tomato mix"
-                    price="IDR 34.000"
-                    discount="10%"
-                  />
-                  <CardProduct
-                    name="Hazelnut Latte"
-                    price="IDR 25.000"
-                    discount={null}
-                  />
-                  <CardProduct
-                    name="Summer fried rice"
-                    price="IDR 32.000"
-                    discount="13%"
-                  />
-                  <CardProduct
-                    name="Creamy Ice Latte"
-                    price="IDR 27.000"
-                    discount={null}
-                  />
-                  <CardProduct
-                    name="Drum Sticks"
-                    price="IDR 30.000"
-                    discount="20%"
-                  />
-                  <CardProduct
-                    name="Salty Rice"
-                    price="IDR 25.000"
-                    discount={null}
-                  />
-                  <CardProduct
-                    name="Hazelnut Latte"
-                    price="IDR 20.000"
-                    discount={null}
-                  />
+                  {this.state.isLoading == true ? (
+                    <div className="w-full flex justify-center items-center">
+                      <Loaders />
+                    </div>
+                  ) : (
+                    false
+                  )}
+                  {this.state.data.map((product) => {
+                    return (
+                      <CardProduct
+                        name={product.product_name}
+                        key={product.id}
+                        img={product.image}
+                        price={product.price}
+                        onClick={() => this.handleNavigate("/details")}
+                      />
+                    );
+                  })}
+                </div>
+                <div className="w-full flex justify-center gap-8 my-12 pr-8">
+                  <button className="btn">prev</button>
+                  <button className="btn">next</button>
                 </div>
                 <p className="text-brown-cs font-semibold mb-12 pl-2">
                   *the price has been cutted by discount appears
@@ -134,9 +289,10 @@ export class Products extends Component {
           </div>
         </main>
         <Footer />
+        {/* <Loaders /> */}
       </>
     );
   }
 }
 
-export default Products
+export default withNavigate(WithSearchParams(Products));

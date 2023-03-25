@@ -7,12 +7,19 @@ import { Link } from "react-router-dom";
 
 
 class Header extends Component {
-  state = {
-    isNavOpen: false,
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      isNavOpen: false,
+    };
+  }
+
+  handleSeacrh = (e) => {
+    this.props.searchValue(e.target.value)
+  }
 
   toggleSidebar = () => {
-    console.log("msok");
+    // console.log("msok");
     if (this.state.isNavOpen === false) {
       this.setState({
         isNavOpen: true,
@@ -31,7 +38,9 @@ class Header extends Component {
           <div className="flex py-4 lg:py-6">
             <section className="flex-1">
               <div>
-                <Link className="flex flex-1 content-center text-center gap-2" to="/">
+                <Link
+                  className="flex flex-1 content-center text-center gap-2"
+                  to="/">
                   <img src={Logo} alt="logo-coffe" />
                   <h1 className="font-bold pt-1 text-dark-blue-cs text-xl lg:text-2xl">
                     Coffe Shop
@@ -63,14 +72,14 @@ class Header extends Component {
             </div>
             <nav className="flex-[2] hidden lg:flex lg:w-full">
               <ul className="flex gap-4 items-center justify-evenly w-full font-bold text-dark-blue-cs lg:relative">
-                <li>
+                <li className="hidden lg:block">
                   <Link to="/">Home</Link>
                 </li>
-                <li>
+                <li className="hidden lg:block">
                   <Link to="/products">Products</Link>
                 </li>
                 <li>Your Cart</li>
-                <li>
+                <li className="hidden lg:block">
                   <Link to="/history">History</Link>
                 </li>
               </ul>
@@ -84,6 +93,8 @@ class Header extends Component {
                       type="search"
                       placeholder="search"
                       className="bg-[#EFEEEE] active:border-none focus:border-none focus:outline-none w-full"
+                      value={this.state.search}
+                      onChange={this.handleSeacrh}
                     />
                   </label>
                 </div>
@@ -94,7 +105,7 @@ class Header extends Component {
                   </p>
                 </div>
                 <Link to="/profile">
-                <img src={profile} alt="" className="rounded-full" />
+                  <img src={profile} alt="" className="rounded-full" />
                 </Link>
               </div>
             </section>

@@ -18,11 +18,18 @@ module.exports = {
         "icon-location": "url('/src/assets/Home/icon/icon-maps.svg')",
         "icon-heart": "url('/src/assets/Home/icon/Heart.svg')",
         "Hazelnut-Latte": "url('/src/assets/Home/product/Hazelnut-Latte.webp')",
-        "profile-testimony-right": "url('/src/assets/Home/Profile/Profile-left.svg')" 
+        "profile-testimony-right":
+          "url('/src/assets/Home/Profile/Profile-left.svg')",
+        payment: "url('/src/assets/Payment/background.webp')",
+        history: "url('/src/assets/History/background.png')",
+        "promo-1": "url('/src/assets/Promo/promo-1.png')",
+        "promo-2": "url('/src/assets/Promo/promo-2.png')",
+        "promo-4": "url('/src/assets/Promo/promo-4.png')",
+        profile: "url('/src/assets/Profile/background.webp')"
       },
       fontFamily: {
-        "rubik": "'Rubik', sans-serif",
-      }
+        rubik: "'Rubik', sans-serif",
+      },
     },
   },
   daisyui: {

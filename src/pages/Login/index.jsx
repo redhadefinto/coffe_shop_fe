@@ -1,15 +1,27 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 import Footer from '../../components/Footer';
 // import Header from '../../components/Header';
 import background from '../../assets/login/background.webp'
 import logo from '../../assets/Logo/logo-coffe.svg'
 import google from '../../assets/Medsos/google.svg'
+import { Link } from "react-router-dom";
+import { login } from '../../utils/https/auth';
+import { save } from "../../utils/localStorage/index"
 
-
-class Login extends Component {
-  render() {
+function Login() {
+  const controller =  React.useMemo(() => new AbortController(), []);
+  const [email, setEmail] = React.useState("");
+  const [pwd, setPwd] = React.useState("");
+  const loginHandler = (e) => {
+    e.preventDefault();
+    login(email, pwd, controller).then((res) => {
+      // console.log(res.data)
+      const key = "coffeshop-token"
+      save(key, res.data.token);
+    }).catch((err) => console.log(err));
+  };
     return (
-      <Fragment>
+      <>
         <main>
           <div className="lg:flex lg:flex-wrap">
             <section className="hidden lg:block lg:flex-[2] lg:bg-cover">
@@ -29,9 +41,9 @@ class Login extends Component {
                     </h1>
                   </div>
                   <div className="flex-1 justify-end flex pr-8 py-4 md:pr-12">
-                    <button className="bg-btn-yellow text-brown-cs py-2 px-8 rounded-2xl hover:cursor-pointer hover:bg-brown-cs hover:text-white">
-                      <a href="">Sign up</a>
-                    </button>
+                    <Link className="bg-btn-yellow text-brown-cs py-2 px-8 rounded-2xl hover:cursor-pointer hover:bg-brown-cs hover:text-white" to="/signUp">
+                      Sing Up
+                    </Link>
                   </div>
                 </div>
                 <div className="form text-white flex flex-col items-center py-8 gap-4 lg:text-grey-custom">
@@ -41,26 +53,27 @@ class Login extends Component {
                     <input
                       type="text"
                       placeholder="Enter your email adress"
-                      className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom"
-                      id="login"
+                      className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom mb-8"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
                     />
-                    <p className="error mb-8 mt-4" id="email-error"></p>
                     <p className="mb-2 font-semibold">Password : </p>
                     <input
                       type="password"
                       placeholder="Enter your password"
-                      className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom"
+                      className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom mb-8"
                       id="password"
+                      value={pwd}
+                      onChange={e => setPwd(e.target.value)}
                     />
-                    <p className="mb-4 mt-4" id="password-error"></p>
-                    <a
-                      href="../LostPassword/index.html"
+                    <Link
+                      to="/forgot"
                       className="block mb-8 lg:text-brown-cs lg:font-bold">
                       Forgot password?
-                    </a>
+                    </Link>
                     <button
                       className="bg-btn-yellow text-brown-cs mb-4 font-bold w-full py-3 text-xl px-8 rounded-2xl hover:cursor-pointer hover:bg-[#a18818] hover:text-white"
-                      id="btn-login">
+                      id="btn-login" onClick={loginHandler}>
                       <a>Login</a>
                     </button>
                   </form>
@@ -82,7 +95,7 @@ class Login extends Component {
               className="relative flex justify-center items-center py-8 px-4 w-[80%] m-auto top-[-5rem] bg-white rounded-2xl gap-2 lg:py-12 lg:px-16 lg:w-[70%]"
               style={{
                 boxShadow:
-                  "rgba(50, 50, 93, 0.5) 0px 6px 12px -2px, rgba(0, 0, 0, 0.7) 0px 3px 7px -3px;",
+                  "rgba(50, 50, 93, 0.5) 0px 6px 12px -2px, rgba(0, 0, 0, 0.7) 0px 3px 7px -3px",
               }}>
               <div className="flex-1 flex flex-col gap-2">
                 <h2 className="title card-title lg:text-2xl lg:font-bold lg:text-dark-blue-cs">
@@ -99,9 +112,8 @@ class Login extends Component {
           </section>
         </main>
         <Footer />
-      </Fragment>
+      </>
     );
-  }
 }
 
 export default Login
