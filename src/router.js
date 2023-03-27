@@ -12,17 +12,61 @@ import History from './pages/History';
 import Payment from './pages/Payments';
 import Profile from '../src/pages/Profile'
 
+import PrivateRoute, { IsLogin } from './utils/wrapper/privateRoute'
+
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
-  { path: "/login", element: <Login /> },
-  { path: "/signup", element: <SignUp /> },
-  { path: "/forgot", element: <Forgot /> },
+  {
+    path: "/login",
+    element: (
+      <IsLogin>
+        <Login />
+      </IsLogin>
+    ),
+  },
+  {
+    path: "/signup",
+    element: (
+      <IsLogin>
+        <SignUp />
+      </IsLogin>
+    ),
+  },
+  {
+    path: "/forgot",
+    element: (
+      <IsLogin>
+        <Forgot />
+      </IsLogin>
+    ),
+  },
   { path: "/products", element: <Products /> },
   { path: "/app", element: <App name="Fazztrack" age={18} /> },
-  { path: "/details", element: <ProductDetail /> },
-  { path: "/history", element: <History /> },
-  { path: "/payments", element: <Payment />},
-  { path: "/profile", element: <Profile />}
+  { path: "/products/:id", element: <ProductDetail /> },
+  {
+    path: "/history",
+    element: (
+      <PrivateRoute>
+        <History />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/payments",
+    element: (
+      <PrivateRoute>
+        <Payment />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <PrivateRoute>
+        <Profile />
+      </PrivateRoute>
+    ),
+  },
 ]);
 
 export default router

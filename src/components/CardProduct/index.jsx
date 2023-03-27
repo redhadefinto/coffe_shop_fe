@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-
+// import withNavigate from "../../utils/wrapper/WithNavigate";
 class CardProduct extends Component {
   constructor(props) {
     super(props)
   }
   render() {
     return (
-      <div className="componenCard flex justify-center items-center mb-20">
+      <div className="flex justify-center items-center mb-20">
         <div
           className="h-[230px] border w-[80%] flex flex-col justify-center items-center rounded-xl lg:w-[100%] xl:w-[90%]"
           style={{
@@ -47,4 +47,4 @@ class CardProduct extends Component {
   }
 }
 
-export default CardProduct
+export default CardProduct;

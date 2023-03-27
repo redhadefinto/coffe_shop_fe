@@ -7,29 +7,52 @@ import google from '../../assets/Medsos/google.svg'
 import { Link } from "react-router-dom";
 import { login } from '../../utils/https/auth';
 import { save } from "../../utils/localStorage/index"
+import { useEffect } from 'react';
+// import jwt  from 'jsonwebtoken';
+// import { isExpired, decodeToken } from "react-jwt";
 
 function Login() {
   const controller =  React.useMemo(() => new AbortController(), []);
-  const [email, setEmail] = React.useState("");
-  const [pwd, setPwd] = React.useState("");
+  // const [email, setEmail] = React.useState("");
+  // const [pwd, setPwd] = React.useState("");
+  const [form, setForm] = React.useState({
+    email: "",
+    password: "",
+  })
   const loginHandler = (e) => {
     e.preventDefault();
-    login(email, pwd, controller).then((res) => {
+    login(form.email, form.password, controller).then((res) => {
       // console.log(res.data)
       const key = "coffeshop-token"
-      save(key, res.data.token);
+      const token = res.data.token
+      save(key, token);
+      console.log(res.data)
+      const image = res.data.image;
+      const id = res.data.id
+      console.log(image, id)
+      // eslint-disable-next-line no-undef
+      // const jwtSecret = `${process.env.JWT_SECRET}`
+      // const myDecodedToken = decodeToken(token);
+      // const isMyTokenExpired = isExpired(token);
+      // console.log(myDecodedToken, isMyTokenExpired)
     }).catch((err) => console.log(err));
   };
+  const onChangeForm = (e) =>
+    setForm((form) => {
+      return {
+        ...form,
+        [e.target.name]: e.target.value,
+      };
+    });
+    useEffect(() => {
+      document.title = "Home";
+    });
     return (
       <>
         <main>
           <div className="lg:flex lg:flex-wrap">
             <section className="hidden lg:block lg:flex-[2] lg:bg-cover">
-              <img
-                src={background}
-                alt="background-benner"
-                height="120vh"
-              />
+              <img src={background} alt="background-benner" height="120vh" />
             </section>
             <section className="bg-login bg-cover bg-no-repeat lg:flex-[3] lg:bg-none lg:bg-white">
               <div className="bg-[rgba(0,0,0,.5)] min-h-[100vh] py-8 pb-16 lg:bg-white">
@@ -41,7 +64,9 @@ function Login() {
                     </h1>
                   </div>
                   <div className="flex-1 justify-end flex pr-8 py-4 md:pr-12">
-                    <Link className="bg-btn-yellow text-brown-cs py-2 px-8 rounded-2xl hover:cursor-pointer hover:bg-brown-cs hover:text-white" to="/signUp">
+                    <Link
+                      className="bg-btn-yellow text-brown-cs py-2 px-8 rounded-2xl hover:cursor-pointer hover:bg-brown-cs hover:text-white"
+                      to="/signUp">
                       Sing Up
                     </Link>
                   </div>
@@ -54,17 +79,18 @@ function Login() {
                       type="text"
                       placeholder="Enter your email adress"
                       className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom mb-8"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
+                      name='email'
+                      value={form.email}
+                      onChange={onChangeForm}
                     />
                     <p className="mb-2 font-semibold">Password : </p>
                     <input
                       type="password"
                       placeholder="Enter your password"
                       className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom mb-8"
-                      id="password"
-                      value={pwd}
-                      onChange={e => setPwd(e.target.value)}
+                      name='password'
+                      value={form.password}
+                      onChange={onChangeForm}
                     />
                     <Link
                       to="/forgot"
@@ -73,7 +99,8 @@ function Login() {
                     </Link>
                     <button
                       className="bg-btn-yellow text-brown-cs mb-4 font-bold w-full py-3 text-xl px-8 rounded-2xl hover:cursor-pointer hover:bg-[#a18818] hover:text-white"
-                      id="btn-login" onClick={loginHandler}>
+                      id="btn-login"
+                      onClick={loginHandler}>
                       <a>Login</a>
                     </button>
                   </form>

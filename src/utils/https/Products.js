@@ -1,14 +1,23 @@
+/* eslint-disable no-undef */
+// eslint-disable-next-line no-undef
 import axios from 'axios'
+// import { json } from 'react-router-dom'
 
-export const getProducts = (controller, query) => {
-  // eslint-disable-next-line no-undef
+export const getProducts = (controller, querys) => {
   const url = process.env.REACT_APP_SERVER_HOST;
-  if(!query) {
+  if(!querys) {
     return axios.get(`${url}/products`, {
       signal: controller.signal,
     });
   }
-  return axios.get(`${url}/products?${query}`, {
+  return axios.get(`${url}/products?${querys}`, {
     signal: controller.signal,
+  })
+}
+
+export const getProductsDetail = (controller, id) => {
+  const url = process.env.REACT_APP_SERVER_HOST
+  return axios.get(`${url}${id}`, {
+    signal: controller.signal
   })
 }

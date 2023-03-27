@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
@@ -10,6 +11,8 @@ import _ from 'lodash'
 // import Loaders from '../../components/Loaders/index';
 import withNavigate from "../../utils/wrapper/WithNavigate";
 import '../../styles/products.css';
+import { Link } from 'react-router-dom';
+// import ProductsDetail from '../ProductDetail'
 
 class Products extends Component {
   constructor(props) {
@@ -20,56 +23,80 @@ class Products extends Component {
     };
     this.controller = new AbortController();
   }
+  // searchParamsFunc = (value) => { return Object.fromEntries(value)};
   paramsCoffe = () => {
+    // console.log(Object.fromEntries(this.props.searchParams));
+    const params = Object.fromEntries(this.props.searchParams);
+    // console.log(params)
+    // console.log(this.props.searchParams)
     this.props.setSearchParams({
+      ...params,
       categories: 1,
     });
   };
   paramsFavorite = () => {
+    const params = Object.fromEntries(this.props.searchParams);
     this.props.setSearchParams({
-      categories: "",
+      ...params,
+      categories: ""
     });
   };
   paramsNonCoffe = () => {
+    const params = Object.fromEntries(this.props.searchParams);
     this.props.setSearchParams({
+      ...params,
       categories: 2,
     });
   };
   paramsFoods = () => {
+    const params = Object.fromEntries(this.props.searchParams);
     this.props.setSearchParams({
+      ...params,
       categories: 3,
     });
   };
   paramsAddOn = () => {
+    const params = Object.fromEntries(this.props.searchParams);
     this.props.setSearchParams({
+      ...params,
       categories: 4,
     });
   };
   categoriesRequest = (event) => {
     let target = event.target.value;
     if (target == 0) {
+      const params = Object.fromEntries(this.props.searchParams);
       this.props.setSearchParams({
+        ...params,
         categories: "",
       });
       return;
     }
     if (target == 1) {
+      const params = Object.fromEntries(this.props.searchParams);
       this.props.setSearchParams({
+        ...params,
         categories: 1,
       });
     }
     if (target == 2) {
+      const params = Object.fromEntries(this.props.searchParams);
       this.props.setSearchParams({
+        ...params,
         categories: 2,
       });
     }
     if (target == 3) {
+      const params = Object.fromEntries(this.props.searchParams);
       this.props.setSearchParams({
+        ...params,
         categories: 3,
       });
     }
     if (target == 4) {
+      const params = Object.fromEntries(this.props.searchParams);
       this.props.setSearchParams({
+        ...params,
         categories: 4,
       });
     }
@@ -77,17 +104,23 @@ class Products extends Component {
   sortingRequest = (event) => {
     let target = event.target.value;
     if(target == "default") {
+      const params = Object.fromEntries(this.props.searchParams);
       this.props.setSearchParams({
+        ...params,
         order: "",
-      })
+      });
     }
     if(target == "priciest") {
+      const params = Object.fromEntries(this.props.searchParams);
       this.props.setSearchParams({
+        ...params,
         order: "priciest",
       });
     }
     if(target == "cheapest") {
+      const params = Object.fromEntries(this.props.searchParams);
       this.props.setSearchParams({
+        ...params,
         order: "cheapest",
       });
     }
@@ -97,13 +130,16 @@ class Products extends Component {
   }
 
   handleSearch = (value) => {
+    const params = Object.fromEntries(this.props.searchParams);
     this.props.setSearchParams({
-      name: value
-    })
+      ...params,
+      name: value,
+    });
   }
   async componentDidUpdate(prevProps) {
     const prevSearchParams = Object.fromEntries(prevProps.searchParams);
     const currentSearchParams = Object.fromEntries(this.props.searchParams);
+    // console.log(this.props.searchParams);
     if (!_.isEqual(prevSearchParams, currentSearchParams)) {
       this.setState({
         isLoading: true,
@@ -250,7 +286,8 @@ class Products extends Component {
                   <div>
                     <select
                       className="border-b-2 border-solid border-brown-cs cursor-pointer font-semibold text-brown-cs"
-                      onChange={this.sortingRequest} defaultValue="default">
+                      onChange={this.sortingRequest}
+                      defaultValue="default">
                       <option value="default">Default</option>
                       <option value="priciest">priciest</option>
                       <option value="cheapest">cheapest</option>
@@ -265,17 +302,22 @@ class Products extends Component {
                   ) : (
                     false
                   )}
-                  {this.state.data.map((product) => {
-                    return (
-                      <CardProduct
-                        name={product.product_name}
-                        key={product.id}
-                        img={product.image}
-                        price={product.price}
-                        onClick={() => this.handleNavigate("/details")}
-                      />
-                    );
-                  })}
+
+                  {this.state.data.length === 0 ? (
+                    <p>Products tidak ditampilkan</p>
+                  ) : (
+                    this.state.data.map((product) => {
+                      return (
+                        <Link to={`/products/${product.id}`} key={product.id}>
+                          <CardProduct
+                            name={product.product_name}
+                            img={product.image}
+                            price={product.price}
+                          />
+                        </Link>
+                      );
+                    })
+                  )}
                 </div>
                 <div className="w-full flex justify-center gap-8 my-12 pr-8">
                   <button className="btn">prev</button>

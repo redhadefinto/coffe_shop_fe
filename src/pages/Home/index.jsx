@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import Footer from '../../components/Footer';
 import HeaderHome from '../../components/HeaderHome';
 import teamWork from '../../assets/Home/team-work-bg.webp'
@@ -13,14 +13,20 @@ import spotify from '../../assets/Home/partner/Spotify.webp'
 import leftIcon from '../../assets/Home/icon/left.svg'
 import rightIcon from '../../assets/Home/icon/Right.svg'
 import iconStar from '../../assets/Home/icon/star.svg'
-
+import { get } from '../../utils/localStorage'
 // import css from '../../styles/Home.css'
+import HeaderHomeAfterLogin from '../../components/HeaderHomeAfterLogin'
 
-class Home extends Component {
-  render() {
+function Home() {
+    const tokenFromLS = get('coffeshop-token');
+    useEffect(() => {
+      document.title = "Home"
+    })
     return (
       <>
-        <HeaderHome />
+        {!tokenFromLS ? (
+          <HeaderHome />
+        ): <HeaderHomeAfterLogin />}
         <main className="font-rubik">
           <section className="bg-home bg-center bg-cover bg-no-repeat min-h-[90vh] bg-fixed">
             <div className="text-white bg-[rgba(0,0,0,.5)] min-h-[90vh]">
@@ -344,6 +350,5 @@ class Home extends Component {
       </>
     );
   }
-}
 
 export default Home
