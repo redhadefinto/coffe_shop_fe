@@ -58,11 +58,13 @@ function Login() {
             <section className="bg-login bg-cover bg-no-repeat lg:flex-[3] lg:bg-none lg:bg-white">
               <div className="bg-[rgba(0,0,0,.5)] min-h-[100vh] py-8 pb-16 lg:bg-white">
                 <div className="flex text-white font-bold lg:text-dark-blue-cs">
-                  <div className="logo flex-1 flex items-center pl-8 gap-1 md:pl-12">
-                    <img src={logo} alt="logo" />
-                    <h1 className="logo-title text-xl md:text-2xl">
-                      Coffe Shop
-                    </h1>
+                  <div className="logo flex-1 flex items-center">
+                    <Link className='flex items-center pl-8 gap-1 md:pl-12 w-max' to="/">
+                      <img src={logo} alt="logo" />
+                      <h1 className="logo-title text-xl md:text-2xl">
+                        Coffe Shop
+                      </h1>
+                    </Link>
                   </div>
                   <div className="flex-1 justify-end flex pr-8 py-4 md:pr-12">
                     <Link

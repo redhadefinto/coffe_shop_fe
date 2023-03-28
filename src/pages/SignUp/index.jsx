@@ -10,22 +10,28 @@ export class SignUp extends Component {
   render() {
     return (
       <>
-        <main className='font-rubik'>
+        <main className="font-rubik">
           <div className="lg:flex lg:flex-wrap">
             <section className="hidden lg:block lg:flex-[9] lg:bg-cover bg-center lg:bg-white">
-              <img src={background} alt="background-benner"/>
+              <img src={background} alt="background-benner" />
             </section>
             <section className="bg-login bg-cover bg-no-repeat lg:flex-[10] lg:bg-none lg:bg-white">
               <div className="bg-[rgba(0,0,0,.5)] min-h-[100vh] py-8 pb-16 lg:bg-white">
                 <div className="flex text-white font-bold lg:text-dark-blue-cs">
-                  <div className="logo flex-1 flex items-center pl-8 gap-1 md:pl-12">
-                    <img src={logo} alt="logo" />
-                    <h1 className="logo-title text-xl md:text-2xl">
-                      Coffe Shop
-                    </h1>
+                  <div className="logo flex-1 flex items-center">
+                    <Link
+                      className="flex items-center pl-8 gap-1 w-max md:pl-12 "
+                      to="/">
+                      <img src={logo} alt="logo" />
+                      <h1 className="logo-title text-xl md:text-2xl">
+                        Coffe Shop
+                      </h1>
+                    </Link>
                   </div>
                   <div className="flex-1 justify-end flex pr-8 py-4 md:pr-12">
-                    <Link className="bg-btn-yellow text-brown-cs py-2 px-8 rounded-2xl hover:cursor-pointer hover:bg-brown-cs hover:text-white" to="/login">
+                    <Link
+                      className="bg-btn-yellow text-brown-cs py-2 px-8 rounded-2xl hover:cursor-pointer hover:bg-brown-cs hover:text-white"
+                      to="/login">
                       Login
                     </Link>
                   </div>
@@ -33,9 +39,7 @@ export class SignUp extends Component {
                 <div className="form text-white flex flex-col items-center py-8 gap-4 lg:text-grey-custom">
                   <h1 className="text-3xl font-bold mb-8">Sign Up</h1>
                   <form className="w-full px-12 md:flex md:flex-col md:w-[70%] lg:w-[80%]">
-                    <p className="mb-2 font-semi text-start">
-                      Email Adress :{" "}
-                    </p>
+                    <p className="mb-2 font-semi text-start">Email Adress : </p>
                     <input
                       type="text"
                       placeholder="Enter your email adress"
@@ -59,10 +63,11 @@ export class SignUp extends Component {
                       id="password"
                     />
                     <p className="mt-4 mb-8" id="password-error"></p>
-                    <Link
-                      className="bg-btn-yellow text-brown-cs mb-4 font-bold w-full py-3 text-xl px-8 rounded-2xl hover:cursor-pointer hover:bg-[#a18818] hover:text-white" to="login" >
-                        Login
-                    </Link>
+                    <button
+                      className="bg-btn-yellow text-brown-cs mb-4 font-bold w-full py-3 text-xl px-8 rounded-2xl hover:cursor-pointer hover:bg-[#a18818] hover:text-white"
+                      >
+                      Sign Up
+                    </button>
                   </form>
                   {/* <br /> */}
                   <button

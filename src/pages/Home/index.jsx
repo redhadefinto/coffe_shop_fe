@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Footer from '../../components/Footer';
-import HeaderHome from '../../components/HeaderHome';
+// import HeaderHome from '../../components/HeaderHome';
 import teamWork from '../../assets/Home/team-work-bg.webp'
 import iconCeklis from '../../assets/Home/icon/Ceklis.svg'
 import CardHome from '../../components/CardHome';
@@ -13,21 +13,22 @@ import spotify from '../../assets/Home/partner/Spotify.webp'
 import leftIcon from '../../assets/Home/icon/left.svg'
 import rightIcon from '../../assets/Home/icon/Right.svg'
 import iconStar from '../../assets/Home/icon/star.svg'
-import { get } from '../../utils/localStorage'
+// import { get } from '../../utils/localStorage'
 import user1 from "../../assets/Home/Profile/Profile-left.svg";
 import user2 from "../../assets/Home/Profile/Profile-middle.svg";
 import user3 from "../../assets/Home/Profile/Profile-right.svg";
 // import css from '../../styles/Home.css'
-import HeaderHomeAfterLogin from '../../components/HeaderHomeAfterLogin'
+// import HeaderHomeAfterLogin from '../../components/HeaderHomeAfterLogin'
+import HeaderBase from '../../components/HeaderBase';
 
 function Home() {
-    const tokenFromLS = get('coffeshop-token');
+    // const tokenFromLS = get('coffeshop-token');
     useEffect(() => {
       document.title = "Home"
     })
     return (
       <>
-        {!tokenFromLS ? <HeaderHome /> : <HeaderHomeAfterLogin />}
+        <HeaderBase />
         <main className="font-rubik">
           <section className="bg-home bg-center bg-cover bg-no-repeat min-h-[90vh] bg-fixed">
             <div className="text-white bg-[rgba(0,0,0,.5)] min-h-[90vh]">
@@ -356,26 +357,6 @@ function Home() {
                     before but their coffee is the best! and yup, you have to
                     order the chicken wings, the best in town!
                   </p>
-                </div>
-              </div>
-              <div className="footer-customer px-4 mb-14">
-                <div className="flex">
-                  <div className="flex justify-start mt-12 gap-4 w-full">
-                    <div className="flex gap-4 flex-1">
-                      <div className="w-[20px] h-[20px] bg-secondary rounded-full border-2 border-solid border-secondary"></div>
-                      <div className="w-[20px] h-[20px] rounded-full border-2 border-solid border-black bg-[#DDE0E4]"></div>
-                      <div className="w-[20px] h-[20px] rounded-full border-2 border-solid border-black bg-[#DDE0E4]"></div>
-                      <div className="w-[20px] h-[20px] rounded-full border-2 border-solid border-black bg-[#DDE0E4]"></div>
-                    </div>
-                    <div className="flex-1 flex justify-end gap-8">
-                      <button className="w-[40px] h-[40px] bg-white border-2 border-solid border-secondary flex justify-center items-center rounded-full">
-                        <img src={leftIcon} alt="" />
-                      </button>
-                      <button className="w-[40px] h-[40px] bg-secondary flex justify-center items-center rounded-full">
-                        <img src={rightIcon} alt="" />
-                      </button>
-                    </div>
-                  </div>
                 </div>
               </div>
               {/* <!-- [END] COMENTARY CUSTOMER CONTENT --> */}

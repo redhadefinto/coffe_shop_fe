@@ -2,13 +2,13 @@ import React from "react";
 // import WithNavigate from "../../utils/wrapper/withNavigate";
 // import { Link } from "react-router-dom";
 import Veggie from "../../assets/Products/veg.png";
-import Header from "../../components/Header/";
+import HeaderBase from "../../components/HeaderBase";
 import Footer from "../../components/Footer";
 
 function History() {
   return (
     <>
-      <Header />
+      <HeaderBase />
       <main className="w-full h-full py-6 lg:px-12 lg:py-24 lg:gap-12 bg-history bg-cover bg-center">
         <section className="modal hidden" id="modal">
           <div className="modal-content" id="modal-content">

@@ -33,3 +33,15 @@ export const register = (email, password, phoneNumber, controller) => {
     signal: controller.signal
   })
 }
+
+export const getOtp = (email, controller) => {
+  const url = `${baseUrl}/auth/otp`;
+  return axios.patch(url, { email }, { signal: controller.signal });
+};
+
+export const forgot = (email, code_otp, password, controller) => {
+  const url = `${baseUrl}/auth/forgot`;
+  const body = { email, otp: code_otp, password };
+  // console.log(body)
+  return axios.patch(url, body, { signal: controller.signal });
+};

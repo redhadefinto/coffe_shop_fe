@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import Header from "../../components/Header";
+import HeaderBase from "../../components/HeaderBase";
 import Footer from "../../components/Footer";
 import img1 from "../../assets/Products/Coffelatte.webp";
 import img2 from "../../assets/Products/ayambakar.png";
@@ -11,7 +11,7 @@ class Payment extends Component {
   render() {
     return (
       <Fragment>
-        <Header />
+        <HeaderBase />
         <main>
           <section>
             <div className="bg-payment bg-cover bg-center  px-5 pt-10 py-40 md:px-20 lg:px-28 xl:px-32">

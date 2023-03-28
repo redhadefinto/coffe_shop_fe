@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react'
-import Header from '../../components/Header'
+import HeaderBase from '../../components/HeaderBase'
 import Footer from '../../components/Footer'
 import CardPromo from '../../components/CardPromo';
 import CardProduct from '../../components/CardProduct'
@@ -165,7 +165,9 @@ class Products extends Component {
     // function fecthData = () => {}
     this.setState({
       isLoading: true,
+      data: []
     });
+    console.log(this.state.data)
     await getProducts(this.controller, this.props.searchParams)
       .then(({ data }) =>
         this.setState({
@@ -184,7 +186,7 @@ class Products extends Component {
     // console.log(Object.fromEntries(this.props.searchParams));
     return (
       <>
-        <Header searchValue={this.handleSearch} />
+        <HeaderBase searchValue={this.handleSearch} />
         <main>
           <div className="lg:flex">
             {/* <!-- section left --> */}

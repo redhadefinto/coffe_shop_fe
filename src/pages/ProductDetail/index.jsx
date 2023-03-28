@@ -1,5 +1,5 @@
 import React, { useEffect, Fragment } from "react";
-import Header from "../../components/Header/index";
+import HeaderBase from "../../components/HeaderBase";
 import Footer from "../../components/Footer/index";
 // import image from "../../assets/ProductDetail/coffe detail.png";
 import plus from "../../assets/Vektor/+.png";
@@ -31,7 +31,7 @@ function Details() {
   }, [])
   return (
     <>
-      <Header />
+      <HeaderBase />
       {datas.map((data) => {
         return (
           <main className="bg-abu inset-0 pb-[270px] px-6" key={data.id}>

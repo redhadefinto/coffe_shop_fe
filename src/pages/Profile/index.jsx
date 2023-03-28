@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Header from "../../components/Header";
+import Header from "../../components/HeaderBase";
 import Footer from "../../components/Footer";
 import picture from '../../assets/Header/profile.svg'
 import iconPensil from '../../assets/Profile/iconPen.svg'
