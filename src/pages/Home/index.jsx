@@ -14,6 +14,9 @@ import leftIcon from '../../assets/Home/icon/left.svg'
 import rightIcon from '../../assets/Home/icon/Right.svg'
 import iconStar from '../../assets/Home/icon/star.svg'
 import { get } from '../../utils/localStorage'
+import user1 from "../../assets/Home/Profile/Profile-left.svg";
+import user2 from "../../assets/Home/Profile/Profile-middle.svg";
+import user3 from "../../assets/Home/Profile/Profile-right.svg";
 // import css from '../../styles/Home.css'
 import HeaderHomeAfterLogin from '../../components/HeaderHomeAfterLogin'
 
@@ -24,9 +27,7 @@ function Home() {
     })
     return (
       <>
-        {!tokenFromLS ? (
-          <HeaderHome />
-        ): <HeaderHomeAfterLogin />}
+        {!tokenFromLS ? <HeaderHome /> : <HeaderHomeAfterLogin />}
         <main className="font-rubik">
           <section className="bg-home bg-center bg-cover bg-no-repeat min-h-[90vh] bg-fixed">
             <div className="text-white bg-[rgba(0,0,0,.5)] min-h-[90vh]">
@@ -263,46 +264,121 @@ function Home() {
                   with great <br className="hidden" /> pleasure.
                 </p>
               </div>
-              <div className="body-customer w-full grid grid-cols-1 justify-center lg:grid-cols-3 lg:gap-4">
-                <div
-                  className="px-6 py-8 w-[90%] m-auto rounded-lg md:w-[70%] lg:w-[100%]"
-                  style={{
-                    boxShadow:
-                      "rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px",
-                  }}>
-                  <div className="">
-                    <div className="flex gap-4 mb-6">
-                      <div className="container-img-card">
-                        <div className="w-[50px] h-[50px] bg-dark-blue-cs rounded-full bg-profile-testimony-right bg-cover bg-center bg-no-repeat"></div>
-                      </div>
-                      <div className="info-card flex-1">
-                        <h3 className="text-dark-blue-cs font-bold">
-                          Viezh Robert
-                        </h3>
-                        <p className="info-card-description">Warsaw, Poland</p>
-                      </div>
-                      <div className="flex gap-2 justify-end">
-                        <p className="text-dark-blue-cs font-bold">4.5</p>
-                        <div className="image-star">
-                          <img
-                            src={iconStar}
-                            alt="icon-star"
-                            width="20"
-                            height="auto"
-                          />
-                        </div>
+              {/* <!-- COMMENTARY CONTAINER --> */}
+              <div className="w-full flex flex-col md:flex-row gap-3 2xl:gap-14 pb-4 overflow-x-scroll xl:overflow-hidden">
+                {/* <!-- CARD COMMENT-1 --> */}
+                <div className="card-comment flex flex-col p-4 sm:p-7 w-full sm:min-w-[400px] max-h-[230px] border-2 rounded-xl border-grey">
+                  <div className="flex w-full gap-3 mb-6">
+                    <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full overflow-hidden">
+                      <img src={user1} alt="" />
+                    </div>
+                    <div className="">
+                      <h4 className="font-medium md:text-lg">Viezh Robert</h4>
+                      <h5 className="text-xs md:text-sm text-grey">
+                        Warsaw, Poland
+                      </h5>
+                    </div>
+                    <div className="ml-auto flex gap-2 items-center">
+                      <p className="font-medium">4.5</p>
+                      <div className="image-star">
+                        <img
+                          src={iconStar}
+                          alt="icon-star"
+                          width="20"
+                          height="auto"
+                        />
                       </div>
                     </div>
-                    <div className="body-card">
-                      <p className="text-dark-blue-cs font-medium">
-                        “Wow... I am very happy to spend my whole day here. the
-                        Wi-fi is good, and the coffee and meals tho. I like it
-                        here!! Very recommended!
-                      </p>
+                  </div>
+                  <p className="text-xs md:text-base">
+                    “Wow... I am very happy to spend my whole day here. the
+                    Wi-fi is good, and the coffee and meals tho. I like it
+                    here!! Very recommended!
+                  </p>
+                </div>
+                {/* <!-- CARD COMMENT-2 --> */}
+                <div className="card-comment flex flex-col p-4 sm:p-7 w-full sm:min-w-[400px] max-h-[230px] border-2 rounded-xl border-grey">
+                  <div className="flex w-full gap-3 mb-6">
+                    <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full overflow-hidden">
+                      <img src={user2} alt="" />
+                    </div>
+                    <div className="">
+                      <h4 className="font-medium md:text-lg">
+                        Yessica Christy
+                      </h4>
+                      <h5 className="text-xs md:text-sm text-grey">
+                        Shanxi, China
+                      </h5>
+                    </div>
+                    <div className="ml-auto flex gap-2 items-center">
+                      <p className="font-medium">4.5</p>
+                      <div className="image-star">
+                        <img
+                          src={iconStar}
+                          alt="icon-star"
+                          width="20"
+                          height="auto"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-xs md:text-base">
+                    “I like it because I like to travel far and still can make
+                    my day better just by drinking their Hazelnut Latte
+                  </p>
+                </div>
+                {/* <!-- CARD COMMENT-3 --> */}
+                <div className="card-comment flex flex-col p-4 sm:p-7 w-full sm:min-w-[400px] max-h-[230px] border-2 rounded-xl border-grey">
+                  <div className="flex w-full gap-3 mb-6">
+                    <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full overflow-hidden">
+                      <img src={user3} alt="" />
+                    </div>
+                    <div className="">
+                      <h4 className="font-medium md:text-lg">Kim Young Jou</h4>
+                      <h5 className="text-xs md:text-sm text-grey">
+                        Seoul, South Korea
+                      </h5>
+                    </div>
+                    <div className="ml-auto flex gap-2 items-center">
+                      <p className="font-medium">4.5</p>
+                      <div className="image-star">
+                        <img
+                          src={iconStar}
+                          alt="icon-star"
+                          width="20"
+                          height="auto"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-xs md:text-base">
+                    “This is very unusual for my taste, I haven’t liked coffee
+                    before but their coffee is the best! and yup, you have to
+                    order the chicken wings, the best in town!
+                  </p>
+                </div>
+              </div>
+              <div className="footer-customer px-4 mb-14">
+                <div className="flex">
+                  <div className="flex justify-start mt-12 gap-4 w-full">
+                    <div className="flex gap-4 flex-1">
+                      <div className="w-[20px] h-[20px] bg-secondary rounded-full border-2 border-solid border-secondary"></div>
+                      <div className="w-[20px] h-[20px] rounded-full border-2 border-solid border-black bg-[#DDE0E4]"></div>
+                      <div className="w-[20px] h-[20px] rounded-full border-2 border-solid border-black bg-[#DDE0E4]"></div>
+                      <div className="w-[20px] h-[20px] rounded-full border-2 border-solid border-black bg-[#DDE0E4]"></div>
+                    </div>
+                    <div className="flex-1 flex justify-end gap-8">
+                      <button className="w-[40px] h-[40px] bg-white border-2 border-solid border-secondary flex justify-center items-center rounded-full">
+                        <img src={leftIcon} alt="" />
+                      </button>
+                      <button className="w-[40px] h-[40px] bg-secondary flex justify-center items-center rounded-full">
+                        <img src={rightIcon} alt="" />
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
+              {/* <!-- [END] COMENTARY CUSTOMER CONTENT --> */}
             </div>
             <div className="footer-customer px-4 mb-14">
               <div className="flex">

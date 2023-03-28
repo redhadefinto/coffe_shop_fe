@@ -30,6 +30,7 @@ function Login() {
       const image = res.data.image;
       const id = res.data.id
       console.log(image, id)
+      // console.log(res.data)
       // eslint-disable-next-line no-undef
       // const jwtSecret = `${process.env.JWT_SECRET}`
       // const myDecodedToken = decodeToken(token);
