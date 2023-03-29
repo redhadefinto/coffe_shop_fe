@@ -5,11 +5,6 @@ import axios from 'axios'
 
 export const getProducts = (controller, querys) => {
   const url = process.env.REACT_APP_SERVER_HOST;
-  if(!querys) {
-    return axios.get(`${url}/products`, {
-      signal: controller.signal,
-    });
-  }
   return axios.get(`${url}/products?${querys}`, {
     signal: controller.signal,
   })

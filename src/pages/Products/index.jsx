@@ -20,6 +20,9 @@ class Products extends Component {
     this.state = {
       isLoading: false,
       data: [],
+      limit: 8,
+      meta: null,
+      page: 1,
     };
     this.controller = new AbortController();
   }
@@ -38,7 +41,7 @@ class Products extends Component {
     const params = Object.fromEntries(this.props.searchParams);
     this.props.setSearchParams({
       ...params,
-      categories: ""
+      categories: "",
     });
   };
   paramsNonCoffe = () => {
@@ -103,28 +106,28 @@ class Products extends Component {
   };
   sortingRequest = (event) => {
     let target = event.target.value;
-    if(target == "default") {
+    if (target == "default") {
       const params = Object.fromEntries(this.props.searchParams);
       this.props.setSearchParams({
         ...params,
         order: "",
       });
     }
-    if(target == "priciest") {
+    if (target == "priciest") {
       const params = Object.fromEntries(this.props.searchParams);
       this.props.setSearchParams({
         ...params,
         order: "priciest",
       });
     }
-    if(target == "cheapest") {
+    if (target == "cheapest") {
       const params = Object.fromEntries(this.props.searchParams);
       this.props.setSearchParams({
         ...params,
         order: "cheapest",
       });
     }
-  }
+  };
   handleNavigate(to) {
     this.props.navigate(to);
   }
@@ -135,55 +138,94 @@ class Products extends Component {
       ...params,
       name: value,
     });
-  }
+  };
   async componentDidUpdate(prevProps) {
     const prevSearchParams = Object.fromEntries(prevProps.searchParams);
     const currentSearchParams = Object.fromEntries(this.props.searchParams);
-    // console.log(this.props.searchParams);
     if (!_.isEqual(prevSearchParams, currentSearchParams)) {
-      this.setState({
+      await this.setState({
         isLoading: true,
+        data: [],
+        meta: null
       });
       await getProducts(this.controller, this.props.searchParams)
-        .then(({ data }) =>
-          this.setState({
-            // isLoading: true,
-            data: data.data,
-          })
-          // console.log(data.data)
+        .then(
+          ({ data }) =>
+            this.setState({
+              // isLoading: true,
+              data: data.data,
+              meta: data.meta,
+            })
+          // console.log(data)
         )
         .catch((err) => console.log(err))
         .finally(() =>
           this.setState({
             isLoading: false,
-          })
+          }),
+          // console.log("sesudah update " + this.state.meta)
         );
     }
     // console.log("No Change");
   }
   async componentDidMount() {
     // function fecthData = () => {}
+    // console.log(window.location.href)
+    // window.location.href = this.props.searchParams
     this.setState({
       isLoading: true,
-      data: []
+      data: [],
     });
-    console.log(this.state.data)
+    // const params = Object.fromEntries(this.props.searchParams);
+    this.props.setSearchParams({
+      // ...params,
+      limit: this.state.limit,
+      page: this.state.page,
+    });
     await getProducts(this.controller, this.props.searchParams)
-      .then(({ data }) =>
-        this.setState({
-          // isLoading: true,
-          data: data.data,
-        })
+      .then(
+        ({ data }) =>
+          this.setState({
+            // isLoading: true,
+            data: data.data,
+            // meta: data.meta,
+          })
+        // console.log(data.meta)
+        // console.log(data)
       )
       .catch((err) => console.log(err))
-      .finally(() =>
-        this.setState({
-          isLoading: false,
-        })
+      .finally(
+        () =>
+          this.setState({
+            isLoading: false,
+          }),
+        // console.log("sebelum update " + this.state.meta)
       );
+  }
+  handlemeta = (e) => {
+    const params = Object.fromEntries(this.props.searchParams);
+    // console.log(e.target.value.map((e) => console.log(e)))
+    // console.log(e.target.value)
+    const page = e.target.value[0];
+    const limit = e.target.value[2];
+    // console.log('page' + page)
+    // console.log('limit' + limit)
+    this.props.setSearchParams({
+      ...params,
+      page,
+      limit,
+    });
+    // return {page, limit}
+  };
+  handleReset = () => {
+    this.props.setSearchParams({
+      page: 1,
+      limit: 8
+    })
   }
   render() {
     // console.log(Object.fromEntries(this.props.searchParams));
+    // console.log(this.state.meta)
     return (
       <>
         <HeaderBase searchValue={this.handleSearch} />
@@ -296,9 +338,9 @@ class Products extends Component {
                     </select>
                   </div>
                 </nav>
-                <div className="grid grid-cols-2 mb-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-4 xl:gap-0">
+                <div className="grid min-h-[50vh] grid-cols-2 mb-4 relative md:grid-cols-3 lg:grid-cols-4 lg:gap-4 xl:gap-0 lg:place-content-center">
                   {this.state.isLoading == true ? (
-                    <div className="w-full flex justify-center items-center">
+                    <div className="absolute w-full m-auto mt-20 flex justify-center items-center">
                       <Loaders />
                     </div>
                   ) : (
@@ -306,7 +348,18 @@ class Products extends Component {
                   )}
 
                   {this.state.data.length === 0 ? (
-                    <p>Products tidak ditampilkan</p>
+                    <>
+                      {this.state.isLoading === true ? (
+                        <></>
+                      ) : (
+                        <>
+                          <div className="flex items-center m-auto justify-center w-full absolute">
+                            <p className='text-center pl-24 font-bold font-xl'>Product Tidak Ditemukan</p>
+                            <button className="btn m-auto absolute" onClick={this.handleReset}>Reset</button>
+                          </div>
+                        </>
+                      )}
+                    </>
                   ) : (
                     this.state.data.map((product) => {
                       return (
@@ -322,8 +375,33 @@ class Products extends Component {
                   )}
                 </div>
                 <div className="w-full flex justify-center gap-8 my-12 pr-8">
-                  <button className="btn">prev</button>
-                  <button className="btn">next</button>
+                  {this.state.meta ? (
+                    <>
+                      {this.state.meta.prev ? (
+                        // console.log(this.state.meta.prev)
+                        <button
+                          className="btn"
+                          onClick={this.handlemeta}
+                          value={[
+                            this.state.meta.prev.page,
+                            this.state.meta.prev.limit,
+                          ]}>
+                          prev
+                        </button>
+                      ) : null}
+                      {this.state.meta.next ? (
+                        <button
+                          className="btn"
+                          onClick={this.handlemeta}
+                          value={[
+                            this.state.meta.next.page,
+                            this.state.meta.next.limit,
+                          ]}>
+                          next
+                        </button>
+                      ) : null}
+                    </>
+                  ) : null}
                 </div>
                 <p className="text-brown-cs font-semibold mb-12 pl-2">
                   *the price has been cutted by discount appears
