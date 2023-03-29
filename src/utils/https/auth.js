@@ -7,18 +7,15 @@ const baseUrl = `${process.env.REACT_APP_SERVER_HOST}`;
 
 
 export const login = (email, password, controller) => {
+  // console.log(email, password
   const body = {
     email, 
     password,
   }
-  // console.log(req.authInfo)
   const url = `${baseUrl}/auth`;
   return axios.post(url, body,
   {
     signal: controller.signal,
-    // transformRequest: [function(data) {
-    //   console.log(data)
-    // }]
   });
 }
 

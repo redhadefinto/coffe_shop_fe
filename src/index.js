@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom'
 import './index.css';
 import router from './router'
+import { Provider } from 'react-redux';
+import store, {persistor} from './redux/store'
+import { PersistGate } from 'redux-persist/integration/react'
 // import App from './pages/Products/';
 // import reportWebVitals from './reportWebVitals';
 
@@ -18,7 +21,11 @@ function Run({ isStrict, children }) {
 root.render(
   // {/* props di masukan sebagai atribut component */}
   <Run isStrict={false}>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={router} />
+      </PersistGate>
+    </Provider>
   </Run>
 );
 

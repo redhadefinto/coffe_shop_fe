@@ -5,39 +5,54 @@ import background from '../../assets/login/background.webp'
 import logo from '../../assets/Logo/logo-coffe.svg'
 import google from '../../assets/Medsos/google.svg'
 import { Link } from "react-router-dom";
-import { login } from '../../utils/https/auth';
-import { save } from "../../utils/localStorage/index"
+// import { login } from '../../utils/https/auth';
+// import { save } from "../../utils/localStorage/index"
 import { useEffect } from 'react';
+import {  useDispatch } from "react-redux";
+// import { counterAction } from "../../redux/slices/counter";
+import { authAction } from "../../redux/slices/auth";
 // import jwt  from 'jsonwebtoken';
 // import { isExpired, decodeToken } from "react-jwt";
 
 function Login() {
-  const controller =  React.useMemo(() => new AbortController(), []);
+  const controller = React.useMemo(() => new AbortController());
   // const [email, setEmail] = React.useState("");
   // const [pwd, setPwd] = React.useState("");
+  // const data = useSelector((state) => state);
+  const dispatch = useDispatch();
   const [form, setForm] = React.useState({
     email: "",
     password: "",
   })
   const loginHandler = (e) => {
     e.preventDefault();
-    login(form.email, form.password, controller).then((res) => {
-      // console.log(res.data)
-      const key = "coffeshop-token"
-      const token = res.data.token
-      save(key, token);
-      console.log(res.data)
-      const image = res.data.image;
-      const id = res.data.id
-      console.log(image, id)
-      // console.log(res.data)
-      // eslint-disable-next-line no-undef
-      // const jwtSecret = `${process.env.JWT_SECRET}`
-      // const myDecodedToken = decodeToken(token);
-      // const isMyTokenExpired = isExpired(token);
-      // console.log(myDecodedToken, isMyTokenExpired)
-    }).catch((err) => console.log(err));
+    // login(form.email, form.password, controller).then((res) => {
+    //   // console.log(res.data)
+    //   const key = "coffeshop-token"
+    //   const token = res.data.token
+    //   save(key, token);
+    //   console.log(res.data)
+    //   const image = res.data.image;
+    //   const id = res.data.id
+    //   console.log(image, id)
+    //   // console.log(res.data)
+    //   // eslint-disable-next-line no-undef
+    //   // const jwtSecret = `${process.env.JWT_SECRET}`
+    //   // const myDecodedToken = decodeToken(token);
+    //   // const isMyTokenExpired = isExpired(token);
+    //   // console.log(myDecodedToken, isMyTokenExpired)
+    // }).catch((err) => console.log(err));
+    // console.log(form.password)
+      dispatch(
+        authAction.getAuthThunk({ email: form.email, password: form.password })
+      );
   };
+  useEffect(() => {
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
   const onChangeForm = (e) =>
     setForm((form) => {
       return {
@@ -45,9 +60,8 @@ function Login() {
         [e.target.name]: e.target.value,
       };
     });
-    useEffect(() => {
-      document.title = "Home";
-    });
+    document.title = "Home";
+    // console.log(data)
     return (
       <>
         <main>

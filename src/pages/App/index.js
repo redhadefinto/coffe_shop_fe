@@ -1,7 +1,9 @@
-import React, {Component } from "react";
+import React, {Component, useMemo } from "react";
 import logo from "../../assets/logo.svg";
 import "../../styles/App.css";
-import { getProducts } from '../../utils/https/Products'
+// import { getUsers } from '../../utils/https/users'
+import { usersAction } from '../../redux/slices/users'
+import { useDispatch } from "react-redux";
 
 import withNavigate from "../../utils/wrapper/WithNavigate";
 
@@ -16,10 +18,12 @@ class App extends Component {
       age: props.age,
       data: []
     };
-    this.controller = new AbortController()
+    this.controller = useMemo(() => new AbortController(), []);
   }
 
   async componentDidMount() {
+    const dispatch = useDispatch();
+    // const data = useSelector((state) => state)
     // bisa jalankan side efek/ fetch
     // fecthUsers(this.controller)
     //   .then((res) => {
@@ -35,9 +39,11 @@ class App extends Component {
     //     if (this.controller.signal.aborted) return;
     //     console.log(err.message);
     //   });
-    await getProducts(this.controller).then(({data}) => this.setState({
-      data: data.data
-    })).catch(err => console.log(err));
+    // await getUsers(this.controller).then(({data}) => this.setState({
+    //   data: data.data
+    // })).catch(err => console.log(err));
+    dispatch(usersAction.getUsersThunk(this.controller)) 
+    // console.log(data)
   }
   componentWillUnmount() {
     () => this.controller.abort()

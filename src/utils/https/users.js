@@ -16,3 +16,9 @@ export const uploadImage = (img, controller) => {
     },
   });
 };
+
+export const getUsers = (controller) => {
+  return axios.get('https://jsonplaceholder.typicode.com/users', {
+    signal: controller.signal
+  })
+}
