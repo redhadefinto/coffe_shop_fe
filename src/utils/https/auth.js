@@ -25,6 +25,7 @@ export const register = (email, password, phoneNumber, controller) => {
     password,
     phoneNumber
   }
+  // console.log(body)
   const url = `${baseUrl}/auth/register`;
   return axios.post(url, body, {
     signal: controller.signal
@@ -42,3 +43,13 @@ export const forgot = (email, code_otp, password, controller) => {
   // console.log(body)
   return axios.patch(url, body, { signal: controller.signal });
 };
+
+export const logOut = (token, controller) => {
+  const url = `${baseUrl}/auth/logout`;
+  return axios.patch(url, {}, {
+    signal: controller.signal,
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+// export const logOut = ()

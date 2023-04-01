@@ -17,15 +17,27 @@ import iconStar from '../../assets/Home/icon/star.svg'
 import user1 from "../../assets/Home/Profile/Profile-left.svg";
 import user2 from "../../assets/Home/Profile/Profile-middle.svg";
 import user3 from "../../assets/Home/Profile/Profile-right.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { profileAction } from "../../redux/slices/profile";
 // import css from '../../styles/Home.css'
 // import HeaderHomeAfterLogin from '../../components/HeaderHomeAfterLogin'
 import HeaderBase from '../../components/HeaderBase';
 
 function Home() {
     // const tokenFromLS = get('coffeshop-token');
+    const controller = React.useMemo(() => new AbortController());
+    const dispatch = useDispatch();
+    const token = useSelector((state) => state.auth.data.token);
     useEffect(() => {
-      document.title = "Home"
-    })
+      // const controller = new AbortController();
+      document.title = "Home";
+      if(token) {
+        dispatch(profileAction.getProfileThunk({ controller, token }));
+      }
+      return () => {
+        controller.abort();
+      };
+    });
     return (
       <>
         <HeaderBase />

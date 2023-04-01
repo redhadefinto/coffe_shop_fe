@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { login } from "../../utils/https/auth";
-
-  // const controller = new AbortController();
-  // const signal = controller.signal;
+import { patchProfile } from "../../utils/https/profile";
 
 const initialState = {
   data: [],
@@ -13,15 +10,12 @@ const initialState = {
   err: null,
 };
 
-const getAuthThunk = createAsyncThunk(
-  "auth/post",
-  async ({ email, password }, controller) => {
-    // const controller = new AbortController();
+const updateProfileThunk = createAsyncThunk(
+  "profile/update",
+  async (file, datas, token, controller ) => {
     try {
-      // console.log(response.data)
-      // console.log(email);
-      // console.log(password);
-      const response = await login(email, password, controller);
+      const response = await patchProfile(file, datas, token, controller);
+      console.log(response);
       return response.data;
     } catch (err) {
       return err;
@@ -29,8 +23,8 @@ const getAuthThunk = createAsyncThunk(
   }
 );
 
-const authSlice = createSlice({
-  name: "auth",
+const profileUpdateSlice = createSlice({
+  name: "profileUpdate",
   initialState,
   reducers: {
     filter: (prevState) => {
@@ -39,15 +33,10 @@ const authSlice = createSlice({
         data: [],
       };
     },
-    // updateProfile: (prevState) => {
-    //   return {
-    //     ...prevState,
-    //   }
-    // }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAuthThunk.pending, (prevState) => {
+      .addCase(updateProfileThunk.pending, (prevState) => {
         return {
           ...prevState,
           isLoading: true,
@@ -56,8 +45,8 @@ const authSlice = createSlice({
           err: null,
         };
       })
-      .addCase(getAuthThunk.fulfilled, (prevState, action) => {
-        // console.log(action)
+      .addCase(updateProfileThunk.fulfilled, (prevState, action) => {
+        console.log(action);
         return {
           ...prevState,
           isLoading: false,
@@ -65,19 +54,19 @@ const authSlice = createSlice({
           data: action.payload,
         };
       })
-      .addCase(getAuthThunk.rejected, (prevState, action) => {
+      .addCase(updateProfileThunk.rejected, (prevState, action) => {
         return {
           ...prevState,
           isLoading: false,
           isRejected: true,
           err: action.payload,
         };
-      });
+      })
   },
 });
 
-export const authAction = {
-  ...authSlice.actions,
-  getAuthThunk,
+export const profileUpdateAction = {
+  ...profileUpdateSlice.actions,
+  updateProfileThunk,
 };
-export default authSlice.reducer;
+export default profileUpdateSlice.reducer;

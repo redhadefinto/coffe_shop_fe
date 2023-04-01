@@ -1,48 +1,46 @@
-import React, { Component } from 'react'
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react'
 import Logo from '../../assets/Logo/logo-coffe.svg'
 import { Link } from 'react-router-dom';
-import { get } from "../../utils/localStorage";
-import search from "../../assets/Header/search.svg";
+// import { get } from "../../utils/localStorage";
+import searchIcon from "../../assets/Header/search.svg";
 import iconChat from "../../assets/Header/chat.svg";
-import profile from "../../assets/Header/profile.svg";
+// import profile from "../../assets/Header/profile.svg";
+import { useSelector } from 'react-redux';
+import Loaders from '../Loaders';
 
-class HeaderBase extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isNavOpen: false,
-      token: get("coffeshop-token"),
-      search: ""
-    };
-  }
-
-  toggleSidebar = () => {
-    if (this.state.isNavOpen === false) {
-      this.setState({
-        isNavOpen: true,
-      });
-      return;
-    }
-    this.setState({
-      isNavOpen: false,
-    });
+function HeaderBase({ searchValue }) {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     isNavOpen: false,
+  //     token: get("coffeshop-token"),
+  //     search: ""
+  //   };
+  // }
+  const [search, setSearch] = useState('')
+  const [navOpen, setNavOpen] = useState(false)
+  const token = useSelector((state) => state.auth.data.token);
+  // const profileImage = useSelector((state) => state.auth.data.image)
+  const dataProfileImage = useSelector((state) => state.profile.data.data)
+  const toggleSidebar = () => {
+    navOpen == false ? setNavOpen(true) : setNavOpen(false);
   };
-  handleSeacrh = () => {
-    this.props.searchValue(this.state.search);
+  const handleSearch = () => {
+    searchValue(search);
   };
-  handleSeacrhValue = (e) => {
-    this.setState({
-      search: e.target.value
-    })
+  const handleSeacrhValue = (e) => {
+    setSearch(e.target.value)
   }
-  render() {
     return (
       <>
         <header className="sticky top-0 bg-white border-b-2 border-solid z-50 font-rubik px-6 md:px-8 lg:px-20">
           <div className="flex py-4 lg:py-6">
             <section className="flex-1">
               <div>
-                <Link className="flex flex-1 content-center text-center gap-2 w-max" to="/">
+                <Link
+                  className="flex flex-1 content-center text-center gap-2 w-max"
+                  to="/">
                   <img src={Logo} alt="logo-coffe" />
                   <h1 className="font-bold pt-1 text-dark-blue-cs text-xl lg:text-2xl">
                     Coffe Shop
@@ -52,7 +50,7 @@ class HeaderBase extends Component {
             </section>
             <div className="flex-1 flex justify-end lg:hidden">
               <label className=" btn-circle swap swap-rotate">
-                <input type="checkbox" onClick={this.toggleSidebar} />
+                <input type="checkbox" onClick={toggleSidebar} />
                 <svg
                   className="swap-off fill-current"
                   xmlns="http://www.w3.org/2000/svg"
@@ -89,20 +87,20 @@ class HeaderBase extends Component {
                 </li>
               </ul>
             </nav>
-            {this.state.token ? (
+            {token ? (
               <section className="flex-[2] hidden lg:block">
                 <div className="flex justify-between items-center">
                   <div className="flex justify-center items-center h-full bg-[#EFEEEE] w-[60%] py-2 px-4 rounded-xl gap-4">
-                    <button onClick={this.handleSeacrh}>
-                      <img src={search} alt="" />
+                    <button onClick={handleSearch}>
+                      <img src={searchIcon} alt="" />
                     </button>
                     <label htmlFor="">
                       <input
                         type="search"
                         placeholder="search"
                         className="bg-[#EFEEEE] active:border-none focus:border-none focus:outline-none w-full"
-                        value={this.state.search}
-                        onChange={this.handleSeacrhValue}
+                        value={search}
+                        onChange={handleSeacrhValue}
                       />
                     </label>
                   </div>
@@ -112,9 +110,24 @@ class HeaderBase extends Component {
                       1
                     </p>
                   </div>
-                  <Link to="/profile">
-                    <img src={profile} alt="" className="rounded-full" />
-                  </Link>
+                  {!dataProfileImage ? (
+                    <Loaders />
+                  ) : (
+                    () => {
+                      const profileImage = dataProfileImage[0].image;
+                      return (
+                        <Link to="/profile">
+                          <img
+                            src={profileImage}
+                            alt=""
+                            className="rounded-full"
+                            width={50}
+                          />
+                        </Link>
+                      );
+                    }
+                    )()
+                  }
                 </div>
               </section>
             ) : (
@@ -134,8 +147,8 @@ class HeaderBase extends Component {
           </div>
         </header>
 
-        {this.state.isNavOpen ? (
-          this.state.token ? (
+        {navOpen ? (
+          token ? (
             <div
               className="h-screen w-screen fixed bg-[rgba(0,0,0,.6)] top-[80px] text-white py-12 z-20 lg:hidden"
               id="hidden-nav">
@@ -150,7 +163,7 @@ class HeaderBase extends Component {
               <section>
                 <div className="flex justify-between items-center flex-col gap-12 mt-8">
                   <div className="flex justify-center items-center h-full bg-[#EFEEEE] w-[60%] py-2 px-4 rounded-xl gap-4">
-                    <img src={search} alt="" />
+                    <img src={searchIcon} alt="" />
                     <label htmlFor="">
                       <input
                         type="search"
@@ -166,9 +179,24 @@ class HeaderBase extends Component {
                         1
                       </p>
                     </div>
-                    <Link to="/profile">
-                      <img src={profile} alt="" className="rounded-full" />
-                    </Link>
+                    {!dataProfileImage ? (
+                      <Loaders />
+                    ) : (
+                      () => {
+                        const profileImage = dataProfileImage[0].image;
+                        return (
+                          <Link to="/profile">
+                            <img
+                              src={profileImage}
+                              alt=""
+                              className="rounded-full"
+                              width={50}
+                            />
+                          </Link>
+                        );
+                      }
+                    )()
+                    }
                   </div>
                 </div>
               </section>
@@ -208,7 +236,6 @@ class HeaderBase extends Component {
         )}
       </>
     );
-  }
 }
 
 export default HeaderBase

@@ -4,18 +4,20 @@ import Footer from '../../components/Footer';
 import background from '../../assets/login/background.webp'
 import logo from '../../assets/Logo/logo-coffe.svg'
 import google from '../../assets/Medsos/google.svg'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { login } from '../../utils/https/auth';
 // import { save } from "../../utils/localStorage/index"
 import { useEffect } from 'react';
 import {  useDispatch } from "react-redux";
 // import { counterAction } from "../../redux/slices/counter";
 import { authAction } from "../../redux/slices/auth";
+// import { profileAction } from '../../redux/slices/profile';
 // import jwt  from 'jsonwebtoken';
 // import { isExpired, decodeToken } from "react-jwt";
 
 function Login() {
   const controller = React.useMemo(() => new AbortController());
+  const navigate = useNavigate()
   // const [email, setEmail] = React.useState("");
   // const [pwd, setPwd] = React.useState("");
   // const data = useSelector((state) => state);
@@ -43,16 +45,30 @@ function Login() {
     //   // console.log(myDecodedToken, isMyTokenExpired)
     // }).catch((err) => console.log(err));
     // console.log(form.password)
+    try {
       dispatch(
-        authAction.getAuthThunk({ email: form.email, password: form.password })
+        authAction.getAuthThunk(
+          { email: form.email, password: form.password },
+          controller
+        )
       );
+      // const controller = React.useMemo(() => new AbortController());
+      // const dispatch = useDispatch();
+      // dispatch(profileAction.getProfileThunk({ controller, token }));
+      navigate("/");
+    } catch (error) {
+      console.log(error)
+    } finally {
+      console.log('siap')
+    }
   };
   useEffect(() => {
     return () => {
       controller.abort();
     };
   }, []);
-
+  
+  // const token = useSelector((state) => state.auth.data.token);
   const onChangeForm = (e) =>
     setForm((form) => {
       return {
