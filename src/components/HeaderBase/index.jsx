@@ -79,7 +79,7 @@ function HeaderBase({ searchValue }) {
                   <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <Link to="/products">Products</Link>
+                  <Link to="/products?page=1&limit=8">Products</Link>
                 </li>
                 <li>Your Cart</li>
                 <li>
@@ -113,7 +113,7 @@ function HeaderBase({ searchValue }) {
                   {!dataProfileImage ? (
                     <Loaders />
                   ) : (
-                    () => {
+                    (() => {
                       const profileImage = dataProfileImage[0].image;
                       return (
                         <Link to="/profile">
@@ -125,9 +125,8 @@ function HeaderBase({ searchValue }) {
                           />
                         </Link>
                       );
-                    }
-                    )()
-                  }
+                    })()
+                  )}
                 </div>
               </section>
             ) : (
@@ -155,7 +154,7 @@ function HeaderBase({ searchValue }) {
               <nav className="navLink-hidden">
                 <ul className="flex justify-center flex-col items-center gap-4 font-bold text-xl">
                   <Link to="/">Home</Link>
-                  <Link to="/products">Product</Link>
+                  <Link to="/products?page=1&limit=8">Product</Link>
                   <li>Your Cart</li>
                   <Link to="/history">History</Link>
                 </ul>
@@ -173,7 +172,7 @@ function HeaderBase({ searchValue }) {
                     </label>
                   </div>
                   <div className="flex gap-12">
-                    <div className="relative bg-white">
+                    <div className="relative">
                       <img src={iconChat} alt="" />
                       <p className="absolute bg-brown-cs rounded-full w-[20px] h-[20px] flex justify-center items-center top-[-40%] right-[70%] text-white">
                         1
@@ -182,7 +181,7 @@ function HeaderBase({ searchValue }) {
                     {!dataProfileImage ? (
                       <Loaders />
                     ) : (
-                      () => {
+                      (() => {
                         const profileImage = dataProfileImage[0].image;
                         return (
                           <Link to="/profile">
@@ -190,13 +189,12 @@ function HeaderBase({ searchValue }) {
                               src={profileImage}
                               alt=""
                               className="rounded-full"
-                              width={50}
+                              width={40}
                             />
                           </Link>
                         );
-                      }
-                    )()
-                    }
+                      })()
+                    )}
                   </div>
                 </div>
               </section>

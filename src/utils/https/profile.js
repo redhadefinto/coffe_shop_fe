@@ -29,11 +29,14 @@ export const patchProfile = ({form, token, controller}, genderUpdate) => {
   // console.log(form)
   // console.log(filevalue)
   // console.log(genderUpdate)
-  const gender = genderUpdate.gender
   const url = `${baseUrl}/profile`;
-  const body = {
-    ...form,
-    gender
+  let body = {...form}
+  if(genderUpdate) {
+    const gender = genderUpdate.gender
+    body = {
+      ...form,
+      gender
+    }
   }
   console.log(body)
   // console.log(form)

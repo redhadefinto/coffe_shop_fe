@@ -21,7 +21,15 @@ class Products extends Component {
       isLoading: false,
       data: [],
       limit: 8,
-      meta: null,
+      meta: {
+        totalData: 13,
+        next: {
+          page: '2',
+          limit: '8'
+        },
+        prev: null,
+        totalPage: 2
+      },
       page: 1,
     };
     this.controller = new AbortController();
@@ -146,7 +154,10 @@ class Products extends Component {
       await this.setState({
         isLoading: true,
         data: [],
-        meta: null
+        meta: {
+          page: 2,
+          limit: 8
+        }
       });
       await getProducts(this.controller, this.props.searchParams)
         .then(
@@ -375,6 +386,7 @@ class Products extends Component {
                   )}
                 </div>
                 <div className="w-full flex justify-center gap-8 my-12 pr-8">
+                  {console.log(this.state.meta)}
                   {this.state.meta ? (
                     <>
                       {this.state.meta.prev ? (

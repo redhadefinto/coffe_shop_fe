@@ -52,4 +52,13 @@ export const logOut = (token, controller) => {
   });
 }
 
+export const changePassword = (body, token, controller) => {
+  console.log(body)
+  const url = `${baseUrl}/auth`;
+  return axios.patch(url, body, {
+    signal: controller.signal,
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
 // export const logOut = ()

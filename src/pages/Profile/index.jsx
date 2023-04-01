@@ -13,8 +13,10 @@ import { useNavigate } from "react-router-dom";
 import Loading from '../../components/Loaders'
 // import { profileUpdateAction } from "../../redux/slices/profileUpdate";
 import {uploadImage, patchProfile} from '../../utils/https/profile'
-import { logOut } from "../../utils/https/auth";
+import { changePassword, logOut } from "../../utils/https/auth";
 // import Modal from "../../components/Modal";
+import "../../styles/products.css";
+// import { set } from "lodash";
 
 function Profile () {
   const controller = React.useMemo(() => new AbortController());
@@ -28,6 +30,12 @@ function Profile () {
   const [fileValue, setFileValue] = useState()
   const [isLoading, setIsLoading] = useState(false)
   const [genderUpdate, setgenderUpdate] = useState()
+  const [showModal, setShowModal] = useState(false)
+  const [oldPassword, setOldPassword] = useState()
+  const [newPassword, setNewPassword] = useState()
+  const [error, setError] = useState()
+  const [msgError, setMsgError] = useState()
+  const [blockEdit, setBlockEdit] = useState(true)
   const dataArray = useSelector((state) => state.profile.data.data);
   // const isLoading = useSelector((state) => state.profile.isLoading)
   let datas;
@@ -48,6 +56,7 @@ function Profile () {
   const fileInputHandler = (e) => {
     e.preventDefault()
     setFileInput(fileInput === false ? true : false)
+    setMsgError()
   }
   const updateFile = (e) => {
     e.preventDefault();
@@ -64,14 +73,24 @@ function Profile () {
     e.preventDefault()
     // console.log(form)
     setIsLoading(true);
-    patchProfile({ form, token, controller }, genderUpdate)
-      .then(() =>
-        dispatch(profileAction.getProfileThunk({ controller, token }))
-      )
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setIsLoading(false);
-      });
+    if(genderUpdate) {
+      patchProfile({ form, token, controller }, genderUpdate)
+        .then(() =>
+          dispatch(profileAction.getProfileThunk({ controller, token }))
+        )
+        .catch((err) => console.log(err))
+        .finally(() => {
+          setIsLoading(false);
+        });
+      }
+      patchProfile({ form, token, controller })
+        .then(() =>
+          dispatch(profileAction.getProfileThunk({ controller, token }))
+        )
+        .catch((err) => console.log(err))
+        .finally(() => {
+          setIsLoading(false);
+        });
   }
   const handleCancel = (e) => {
     e.preventDefault()
@@ -79,14 +98,34 @@ function Profile () {
   }
   const updateProfile = (e) => {
     e.preventDefault()
+    if(!fileValue) {
+      setError(true)
+      setMsgError('Masukan Gambar!!!')
+      return;
+    }
     setFileInput(false)
     setIsLoading(true)
     uploadImage(fileValue, token, controller).then(() => dispatch(profileAction.getProfileThunk({controller, token}))).catch((err) => console.log(err)).finally(() => {
       setIsLoading(false)
     })
-    // dispatch(profileAction.updateImageThunk(fileValue, token, controller))
-    // dispatch(profileUpdateAction.updateProfileThunk({fileValue, token, controller}))
   }
+
+  const handleChangePassword = (e) => {
+    e.preventDefault()
+    const body = {
+      oldPass: oldPassword,
+      newPass: newPassword
+    }
+    setIsLoading(true)
+    changePassword(body, token, controller).then(() => {
+      logOut(token, controller)
+      dispatch(authAction.filter())
+      navigate('/')
+    }).catch((err) => console.log(err)).finally(() => {
+      setIsLoading(false)
+    })
+  }
+
   const logOutHandler = (e) => {
     e.preventDefault()
     logOut(token, controller);
@@ -106,8 +145,10 @@ function Profile () {
             </div>
           )}
           {!dataArray ? (
-            <div className="flex items-center justify-center h-full w-full absolute bg-[rgba(0,0,0,.4)]">
-              <Loading />
+            <div className="h-[200vh] lg:h-[100vh] w-full flex justify-center items-center absolute">
+              <div className="flex items-center absolute top-[50%] justify-center h-[100vh] w-full z-20 bg-[rgba(0,0,0,.4)]">
+                <Loading />
+              </div>
             </div>
           ) : (
             (() => {
@@ -117,7 +158,7 @@ function Profile () {
               const month = ("0" + (date.getMonth() + 1)).slice(-2);
               const day = ("0" + date.getDate()).slice(-2);
               const formattedDate = `${year}-${month}-${day}`;
-              const gender = datas.gender
+              const gender = datas.gender;
               return (
                 <>
                   <h1 className="font-medium text-4xl text-white py-10 lg:text-start">
@@ -158,6 +199,13 @@ function Profile () {
                                 onClick={updateProfile}>
                                 Submit
                               </button>
+                              {error === true ? (
+                                <p className="mt-4 text-red-600 font-bold text-xl">
+                                  {msgError}
+                                </p>
+                              ) : (
+                                <></>
+                              )}
                             </div>
                           </div>
                         ) : (
@@ -180,6 +228,12 @@ function Profile () {
                             className="w-12 h-12 flex justify-center items-center rounded-full bg-brown-cs cursor-pointer bg-center bg-no-repeat"
                             style={{
                               backgroundImage: `url('${iconPensil}')`,
+                            }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              blockEdit
+                                ? setBlockEdit(false)
+                                : setBlockEdit(true);
                             }}></button>
                         </div>
                         <div className="grid grid-cols-1 gap-12 ml-8 mr-14 my-8 mb-24">
@@ -196,7 +250,8 @@ function Profile () {
                               // name="email"
                               defaultValue={datas.email}
                               placeholder="Please enter your email"
-                              // onChange={handle}
+                              disabled={blockEdit}
+                              onChange={handleForm}
                               className="mt-2 min-h-12 border-b-2 border-solid border-black focus:outline-none"
                             />
                           </div>
@@ -212,6 +267,7 @@ function Profile () {
                               placeholder="Please enter your Phone number"
                               name="phone_number"
                               onChange={handleForm}
+                              disabled={blockEdit}
                               defaultValue={datas.phone_number}
                               className="mt-2 min-h-12 border-b-2 border-solid border-black focus:outline-none"
                             />
@@ -229,6 +285,7 @@ function Profile () {
                               className="min-h-16 border-b-2 border-solid border-black focus:outline-none mt-4"
                               placeholder="Enter your full address"
                               defaultValue={datas.address}
+                              disabled={blockEdit}
                               onChange={handleForm}></textarea>
                           </div>
                         </div>
@@ -262,7 +319,7 @@ function Profile () {
                                 name="display_name"
                                 className="min-h-14 border-b-2 border-solid border-black focus:outline-none mt-2"
                                 defaultValue={datas.display_name}
-                                // value={datas.display_name}
+                                disabled={blockEdit}
                                 onChange={handleForm}
                               />
                             </div>
@@ -281,6 +338,7 @@ function Profile () {
                                 className="min-h-14 border-b-2 border-solid border-black focus:outline-none mt-2"
                                 defaultValue={datas.first_name}
                                 onChange={handleForm}
+                                disabled={blockEdit}
                               />
                             </div>
                             <div className="input flex bg-white gap-2 flex-col">
@@ -297,6 +355,7 @@ function Profile () {
                                 className="min-h-14 border-b-2 border-solid border-black focus:outline-none mt-2"
                                 defaultValue={datas.last_name}
                                 onChange={handleForm}
+                                disabled={blockEdit}
                               />
                             </div>
                           </div>
@@ -310,7 +369,7 @@ function Profile () {
                               <input
                                 type="date"
                                 id="birthDate"
-                                placeholder="zulaikha17@gmail.com"
+                                disabled={blockEdit}
                                 name="birthday"
                                 className="min-h-12 border-b-2 border-solid border-black focus:outline-none mt-2"
                                 defaultValue={formattedDate}
@@ -328,10 +387,10 @@ function Profile () {
                                       type="radio"
                                       name="gender"
                                       id="male"
-                                      className=" appearance-none"
+                                      className="appearance-none"
                                       defaultChecked
                                       onChange={handleGender}
-                                      // value={data.gender}
+                                      disabled={blockEdit}
                                     />
                                     <span className="absolute border-0 rounded-full h-8 w-8 checked:border-4 border-secondary checked:block checked:border-secondary "></span>
                                     <p className="ml-36">Male</p>
@@ -344,7 +403,7 @@ function Profile () {
                                       name="gender"
                                       id="famale"
                                       className="appearance-none"
-                                      // defaultChecked
+                                      disabled={blockEdit}
                                       onChange={handleGender}
                                       // value={data.gender}
                                     />
@@ -364,7 +423,7 @@ function Profile () {
                                       className=" appearance-none"
                                       // defaultChecked
                                       onChange={handleGender}
-                                      // value={data.gender}
+                                      disabled={blockEdit}
                                     />
                                     <span className="absolute border-0 rounded-full h-8 w-8 checked:border-4 border-secondary checked:block checked:border-secondary "></span>
                                     <p className="ml-36">Male</p>
@@ -378,7 +437,7 @@ function Profile () {
                                       id="famale"
                                       className="appearance-none"
                                       onChange={handleGender}
-                                      // checked
+                                      disabled={blockEdit}
                                       defaultChecked
                                       // value="male"
                                     />
@@ -410,7 +469,12 @@ function Profile () {
                           </button>
                         </div>
                         <div className="flex flex-col gap-5 mt-8">
-                          <button className="flex items-center h-14 rounded-2xl text-brown-cs font-bold bg-white  justify-between px-10">
+                          <button
+                            className="flex items-center h-14 rounded-2xl text-brown-cs font-bold bg-white  justify-between px-10"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setShowModal(true);
+                            }}>
                             Edit Password{" "}
                           </button>
                           <button
@@ -425,6 +489,54 @@ function Profile () {
                 </>
               );
             })()
+          )}
+          {showModal ? (
+            <div className="h-[330vh] lg:h-[160vh] w-full absolute">
+              <div className="flex items-end pb-12 absolute justify-center h-full w-full z-10 bg-[rgba(0,0,0,.4)]">
+                <form className="w-[80%] h-[25%] md:w-[60%] md:h-[30%] lg:w-[40%] lg:h-[50%] bg-[rgba(255,255,255,9)] rounded-2xl flex flex-col py-8 px-12 gap-4" onSubmit={handleChangePassword}>
+                  <p className="font-bold text-2xl text-dark-blue-cs">
+                    Change Password
+                  </p>
+                  <label
+                    htmlFor=""
+                    className="mt-8 font-bold text-2xl text-dark-blue-cs">
+                    Old Password
+                  </label>
+                  <input
+                    type="password"
+                    className="border-b-2 border-solid border-dark-blue-cs focus:outline-none w-[80%]"
+                    value={oldPassword}
+                    onChange={((e) => setOldPassword(e.target.value))}
+                  />
+                  <label
+                    htmlFor=""
+                    className="mt-12 font-bold text-2xl text-dark-blue-cs">
+                    New Password
+                  </label>
+                  <input
+                    type="password"
+                    className="border-b-2 border-solid border-dark-blue-cs focus:outline-none w-[80%]"
+                    value={newPassword}
+                    onChange={((e) => setNewPassword(e.target.value))}
+                  />
+                  <div className="mt-12 gap-8 flex justify-center items-center">
+                    <button type="submit" className="rounded-xl w-[50%] py-3 text-dark-blue-cs font-bold border-2 border-solid border-brown-cs hover:bg-btn-yellow hover:text-brown-cs hover:transition-all hover:duration-500">
+                      Save
+                    </button>
+                    <button
+                      className="rounded-xl w-[50%] py-3 text-dark-blue-cs font-bold border-2 border-solid border-brown-cs hover:bg-btn-yellow hover:text-brown-cs hover:transition-all hover:duration-500"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setShowModal(false);
+                      }}>
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          ) : (
+            false
           )}
         </div>
       </main>
