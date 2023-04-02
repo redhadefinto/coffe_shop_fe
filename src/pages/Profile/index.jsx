@@ -17,6 +17,7 @@ import { changePassword, logOut } from "../../utils/https/auth";
 // import Modal from "../../components/Modal";
 import "../../styles/products.css";
 // import { set } from "lodash";
+// import { set } from "lodash";
 
 function Profile () {
   const controller = React.useMemo(() => new AbortController());
@@ -26,16 +27,17 @@ function Profile () {
   // const isLoading = useSelector((state) => console.log(state.profile.isLoading))
   // console.log(isLoading)
   const navigate = useNavigate();
-  const [fileInput, setFileInput] = useState(false)
+  const [fileInput, setFileInput] = useState(true)
   const [fileValue, setFileValue] = useState()
   const [isLoading, setIsLoading] = useState(false)
   const [genderUpdate, setgenderUpdate] = useState()
   const [showModal, setShowModal] = useState(false)
   const [oldPassword, setOldPassword] = useState()
   const [newPassword, setNewPassword] = useState()
-  const [error, setError] = useState()
+  const [error, setError] = useState(false)
   const [msgError, setMsgError] = useState()
-  const [blockEdit, setBlockEdit] = useState(true)
+  const [editContact, setEditContact] = useState(true)
+  const [editDetails, setEditDetails] = useState(true)
   const dataArray = useSelector((state) => state.profile.data.data);
   // const isLoading = useSelector((state) => state.profile.isLoading)
   let datas;
@@ -112,16 +114,31 @@ function Profile () {
 
   const handleChangePassword = (e) => {
     e.preventDefault()
+    // console.log(oldPassword)
+    // console.log(newPassword)
+    if (oldPassword == undefined || newPassword == undefined) {
+      setError(true);
+      setMsgError("The old password and the new password must be filled in");
+      return;
+    }
     const body = {
       oldPass: oldPassword,
       newPass: newPassword
     }
     setIsLoading(true)
     changePassword(body, token, controller).then(() => {
+      setError(false)
+      setMsgError('')
       logOut(token, controller)
       dispatch(authAction.filter())
       navigate('/')
-    }).catch((err) => console.log(err)).finally(() => {
+    }).catch(() => {
+      setError(true)
+      setMsgError("Old password is wrong");
+      setOldPassword('')
+      setNewPassword('')
+      return;
+    }).finally(() => {
       setIsLoading(false)
     })
   }
@@ -184,18 +201,30 @@ function Profile () {
                           {datas.display_name}
                         </h2>
                         {fileInput === true ? (
-                          <div className="flex flex-col absolute top-[50%] bg-white">
-                            <div action="">
+                          <div
+                            className="py-4 px-8 rounded-3xl absolute top-[50%] bg-white"
+                            style={{
+                              boxShadow:
+                                "rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px",
+                            }}>
+                            <div className="flex flex-col justify-center items-center">
                               <input
                                 type="file"
                                 id=""
                                 name="avatar"
+                                className="text-sm text-grey-500
+                                file:mr-5 file:py-2 file:px-6
+                                file:rounded-full file:border-0
+                                file:text-sm file:font-medium
+                                file:bg-btn-yellow file:text-white
+                                hover:file:cursor-pointer hover:file:bg-brown-cs
+                                hover:file:text-btn-yellow hover:file:transition-all hover:file:duration-500"
                                 onChange={updateFile}
                               />
                               <button
                                 type="button"
-                                className="mt-4 py-2 px-4 bg-brown-cs text-btn-yellow font-bold rounded-2xl
-                            w-[50%] self-center"
+                                className="mt-6 py-2 px-4 bg-brown-cs text-btn-yellow font-bold rounded-2xl
+                            w-[50%] self-center hover:bg-btn-yellow hover:text-white hover:transition-all hover:duration-500"
                                 onClick={updateProfile}>
                                 Submit
                               </button>
@@ -231,9 +260,9 @@ function Profile () {
                             }}
                             onClick={(e) => {
                               e.preventDefault();
-                              blockEdit
-                                ? setBlockEdit(false)
-                                : setBlockEdit(true);
+                              editContact
+                                ? setEditContact(false)
+                                : setEditContact(true);
                             }}></button>
                         </div>
                         <div className="grid grid-cols-1 gap-12 ml-8 mr-14 my-8 mb-24">
@@ -250,7 +279,7 @@ function Profile () {
                               // name="email"
                               defaultValue={datas.email}
                               placeholder="Please enter your email"
-                              disabled={blockEdit}
+                              disabled={editContact}
                               onChange={handleForm}
                               className="mt-2 min-h-12 border-b-2 border-solid border-black focus:outline-none"
                             />
@@ -267,7 +296,7 @@ function Profile () {
                               placeholder="Please enter your Phone number"
                               name="phone_number"
                               onChange={handleForm}
-                              disabled={blockEdit}
+                              disabled={editContact}
                               defaultValue={datas.phone_number}
                               className="mt-2 min-h-12 border-b-2 border-solid border-black focus:outline-none"
                             />
@@ -285,7 +314,7 @@ function Profile () {
                               className="min-h-16 border-b-2 border-solid border-black focus:outline-none mt-4"
                               placeholder="Enter your full address"
                               defaultValue={datas.address}
-                              disabled={blockEdit}
+                              disabled={editContact}
                               onChange={handleForm}></textarea>
                           </div>
                         </div>
@@ -301,6 +330,12 @@ function Profile () {
                             className="w-12 h-12 flex justify-center items-center rounded-full bg-brown-cs cursor-pointer bg-center bg-no-repeat"
                             style={{
                               backgroundImage: `url('${iconPensil}')`,
+                            }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              editDetails
+                                ? setEditDetails(false)
+                                : setEditDetails(true);
                             }}></button>
                         </div>
                         <div className="flex ml-8 mr-14 gap-9 flex-col lg:flex-row">
@@ -319,7 +354,7 @@ function Profile () {
                                 name="display_name"
                                 className="min-h-14 border-b-2 border-solid border-black focus:outline-none mt-2"
                                 defaultValue={datas.display_name}
-                                disabled={blockEdit}
+                                disabled={editDetails}
                                 onChange={handleForm}
                               />
                             </div>
@@ -338,7 +373,7 @@ function Profile () {
                                 className="min-h-14 border-b-2 border-solid border-black focus:outline-none mt-2"
                                 defaultValue={datas.first_name}
                                 onChange={handleForm}
-                                disabled={blockEdit}
+                                disabled={editDetails}
                               />
                             </div>
                             <div className="input flex bg-white gap-2 flex-col">
@@ -355,7 +390,7 @@ function Profile () {
                                 className="min-h-14 border-b-2 border-solid border-black focus:outline-none mt-2"
                                 defaultValue={datas.last_name}
                                 onChange={handleForm}
-                                disabled={blockEdit}
+                                disabled={editDetails}
                               />
                             </div>
                           </div>
@@ -369,7 +404,7 @@ function Profile () {
                               <input
                                 type="date"
                                 id="birthDate"
-                                disabled={blockEdit}
+                                disabled={editDetails}
                                 name="birthday"
                                 className="min-h-12 border-b-2 border-solid border-black focus:outline-none mt-2"
                                 defaultValue={formattedDate}
@@ -390,7 +425,7 @@ function Profile () {
                                       className="appearance-none"
                                       defaultChecked
                                       onChange={handleGender}
-                                      disabled={blockEdit}
+                                      disabled={editDetails}
                                     />
                                     <span className="absolute border-0 rounded-full h-8 w-8 checked:border-4 border-secondary checked:block checked:border-secondary "></span>
                                     <p className="ml-36">Male</p>
@@ -403,7 +438,7 @@ function Profile () {
                                       name="gender"
                                       id="famale"
                                       className="appearance-none"
-                                      disabled={blockEdit}
+                                      disabled={editDetails}
                                       onChange={handleGender}
                                       // value={data.gender}
                                     />
@@ -423,7 +458,7 @@ function Profile () {
                                       className=" appearance-none"
                                       // defaultChecked
                                       onChange={handleGender}
-                                      disabled={blockEdit}
+                                      disabled={editDetails}
                                     />
                                     <span className="absolute border-0 rounded-full h-8 w-8 checked:border-4 border-secondary checked:block checked:border-secondary "></span>
                                     <p className="ml-36">Male</p>
@@ -437,7 +472,7 @@ function Profile () {
                                       id="famale"
                                       className="appearance-none"
                                       onChange={handleGender}
-                                      disabled={blockEdit}
+                                      disabled={editDetails}
                                       defaultChecked
                                       // value="male"
                                     />
@@ -492,8 +527,8 @@ function Profile () {
           )}
           {showModal ? (
             <div className="h-[330vh] lg:h-[160vh] w-full absolute">
-              <div className="flex items-end pb-12 absolute justify-center h-full w-full z-10 bg-[rgba(0,0,0,.4)]">
-                <form className="w-[80%] h-[25%] md:w-[60%] md:h-[30%] lg:w-[40%] lg:h-[50%] bg-[rgba(255,255,255,9)] rounded-2xl flex flex-col py-8 px-12 gap-4" onSubmit={handleChangePassword}>
+              <div className="flex items-end pb-16 absolute justify-center h-full w-full z-10 bg-[rgba(0,0,0,.4)]">
+                <form className="w-[80%] h-[25%] md:w-[60%] md:h-[30%] lg:w-[40%] lg:h-[60%] bg-[rgba(255,255,255,9)] rounded-2xl flex flex-col py-8 px-12 gap-4" onSubmit={handleChangePassword}>
                   <p className="font-bold text-2xl text-dark-blue-cs">
                     Change Password
                   </p>
@@ -528,10 +563,17 @@ function Profile () {
                       onClick={(e) => {
                         e.preventDefault();
                         setShowModal(false);
+                        setError(false)
+                        setMsgError()
                       }}>
                       Cancel
                     </button>
                   </div>
+                    {error ? (
+                      <div className="mt-4 flex items-center justify-center">
+                        <p className="font-bold text-red-600 text-xl">{msgError}</p>
+                      </div>
+                    ): false}
                 </form>
               </div>
             </div>
