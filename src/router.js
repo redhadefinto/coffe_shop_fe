@@ -13,9 +13,10 @@ import Payment from './pages/Payments';
 import Profile from '../src/pages/Profile'
 
 import PrivateRoute, { IsLogin } from './utils/wrapper/privateRoute'
+import DataNotFound from './pages/DataNotFound';
 
 const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
+  { path: "/", element: <Home />, errorElement: <DataNotFound /> },
   {
     path: "/login",
     element: (

@@ -44,7 +44,8 @@ function SignUp () {
           // console.log(res.data);
           navigate('/login')
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
+        .finally(() => setIsLoading(false))
     };
     useEffect(() => {
       document.title = "Sign Up";

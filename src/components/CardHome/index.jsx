@@ -3,6 +3,9 @@ import iconCeklis from "../../assets/Home/icon/icon-ceklis-nobg.svg";
 
 
 class CardHome extends Component {
+  constructor(props) {
+    super(props)
+  }
   render() {
     return (
       <div
@@ -12,11 +15,12 @@ class CardHome extends Component {
             "rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px",
         }}>
         <div className="card-header relative min-h-[50px] flex justify-center">
-          <div className="bg-Hazelnut-Latte w-[100px] h-[100px] rounded-full bg-dark-blue-cs bg-cover bg-center absolute top-[-120%]"></div>
+          <div className={`w-[100px] h-[100px] rounded-full bg-dark-blue-cs bg-cover bg-center absolute top-[-120%]`}
+          style={{backgroundImage: `url('${this.props.img}')`}}></div>
         </div>
         <div className="card-body">
           <h3 className="text-center font-bold text-dark-blue-cs text-2xl mb-8">
-            Hazelnut Latte
+            {this.props.title}
           </h3>
           <div className="flex flex-col gap-4 mb-12">
             <div className="flex gap-2">

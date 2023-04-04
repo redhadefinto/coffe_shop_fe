@@ -19,13 +19,10 @@ import Loaders from '../../components/Loaders';
 function Login() {
   const controller = React.useMemo(() => new AbortController(), []);
   const navigate = useNavigate()
-  // const [email, setEmail] = React.useState("");
-  // const [pwd, setPwd] = React.useState("");
-  // const data = useSelector((state) => state);
   const dispatch = useDispatch();
   const [msg, setMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-   const [isWrong, setIsWrong] = useState(false);
+  const [isWrong, setIsWrong] = useState(false);
   const [form, setForm] = React.useState({
     email: "",
     password: "",
@@ -37,6 +34,7 @@ function Login() {
           setIsWrong(true);
           return;
         }
+        setIsLoading(true)
       dispatch(
         authAction.getAuthThunk(
           { email: form.email, password: form.password },
@@ -48,13 +46,14 @@ function Login() {
           setMsg("Email / Password is Invalid !");
           setIsWrong(true);
           setForm({ ...form, password: "" });
+          return;
         }
-        console.log(result);
+        // console.log(result);
         if (result.payload && result.payload.token) {
           setIsLoading(false);
           navigate("/");
         }
-      }).catch((err) => console.log(err))
+      }).catch((err) => console.log(err)).finally(() => setIsLoading(false))
   };
   useEffect(() => {
     document.title = 'Login'
@@ -77,7 +76,9 @@ function Login() {
       <>
         <main>
           {isLoading && (
-                <Loaders />
+            <div className='absolute w-full h-screen flex justify-center items-center bg-[rgba(0,0,0,.5)]'>
+              <Loaders />
+            </div>
           )}
           <div className="lg:flex lg:flex-wrap">
             <section className="hidden lg:block lg:flex-[2] lg:bg-cover">

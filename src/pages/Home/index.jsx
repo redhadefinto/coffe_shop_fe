@@ -20,6 +20,9 @@ import user3 from "../../assets/Home/Profile/Profile-right.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { profileAction } from "../../redux/slices/profile";
 // import css from '../../styles/Home.css'
+import ayambakar from '../../assets/Products/ayambakar.png'
+import coffelatte from '../../assets/Products/Coffelatte.webp'
+import veg from '../../assets/Products/veg.png'
 // import HeaderHomeAfterLogin from '../../components/HeaderHomeAfterLogin'
 import HeaderBase from '../../components/HeaderBase';
 
@@ -40,7 +43,7 @@ function Home() {
     });
     return (
       <>
-        <HeaderBase />
+        <HeaderBase title="home" />
         <main className="font-rubik">
           <section className="bg-home bg-center bg-cover bg-no-repeat min-h-[90vh] bg-fixed">
             <div className="text-white bg-[rgba(0,0,0,.5)] min-h-[90vh]">
@@ -176,9 +179,9 @@ function Home() {
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                <CardHome />
-                <CardHome />
-                <CardHome />
+                <CardHome img={ayambakar} title="Chicken Fire Wings" />
+                <CardHome img={coffelatte} title="Hazelnut Latte" />
+                <CardHome img={veg} title="Veggie tomato mix" />
               </div>
             </div>
           </section>

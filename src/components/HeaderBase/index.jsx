@@ -9,15 +9,7 @@ import iconChat from "../../assets/Header/chat.svg";
 import { useSelector } from 'react-redux';
 import Loaders from '../Loaders';
 
-function HeaderBase({ searchValue }) {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     isNavOpen: false,
-  //     token: get("coffeshop-token"),
-  //     search: ""
-  //   };
-  // }
+function HeaderBase({ searchValue, title }) {
   const [search, setSearch] = useState('')
   const [navOpen, setNavOpen] = useState(false)
   const token = useSelector((state) => state.auth.data.token);
@@ -74,25 +66,65 @@ function HeaderBase({ searchValue }) {
             <nav className="flex-[2] hidden lg:flex">
               <ul className="flex gap-8 items-center justify-center w-full font-bold text-dark-blue-cs xl:gap-12">
                 <li>
-                  <Link to="/">Home</Link>
+                  <Link
+                    to="/"
+                    className={
+                      title === "home"
+                        ? "text-brown-cs font-bold"
+                        : "text-black"
+                    }>
+                    Home
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/products?page=1&limit=8">Products</Link>
+                  <Link
+                    to="/products?page=1&limit=8"
+                    className={
+                      title === "product"
+                        ? "text-brown-cs font-bold"
+                        : "text-black"
+                    }>
+                    Products
+                  </Link>
                 </li>
                 <div className="relative">
                   {token ? (
                     <>
-                      <Link to="/payments">Your Cart</Link>
+                      <Link
+                        to="/payments"
+                        className={
+                          title === "cart"
+                            ? "text-brown-cs font-bold"
+                            : "text-black"
+                        }>
+                        Your Cart
+                      </Link>
                       <p className="absolute bg-brown-cs rounded-full w-[20px] h-[20px] flex justify-center items-center top-[-40%] right-[-30%] text-white">
-                      {cartState}
+                        {cartState}
                       </p>
                     </>
-                  ): (
-                    <Link to="/payments">Your Cart</Link>
+                  ) : (
+                    <Link
+                      to="/payments"
+                      className={
+                        title === "cart"
+                          ? "text-brown-cs font-bold"
+                          : "text-black"
+                      }>
+                      Your Cart
+                    </Link>
                   )}
                 </div>
                 <li>
-                  <Link to="/history">History</Link>
+                  <Link
+                    to="/history"
+                    className={
+                      title === "history"
+                        ? "text-brown-cs font-bold"
+                        : "text-black"
+                    }>
+                    History
+                  </Link>
                 </li>
               </ul>
             </nav>

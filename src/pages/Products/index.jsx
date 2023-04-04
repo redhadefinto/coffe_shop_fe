@@ -31,6 +31,7 @@ class Products extends Component {
         totalPage: 2
       },
       page: 1,
+      isActive: ''
     };
     this.controller = new AbortController();
   }
@@ -222,7 +223,7 @@ class Products extends Component {
   render() {
     return (
       <>
-        <HeaderBase searchValue={this.handleSearch} />
+        <HeaderBase searchValue={this.handleSearch} title="product" />
         <main>
           <div className="lg:flex">
             {/* <!-- section left --> */}
@@ -301,23 +302,41 @@ class Products extends Component {
                     </select>
                   </div>
                   <ul className="hidden lg:flex lg:justify-around lg:pt-8 lg:text-[#9F9F9F]">
+                    {/* {console.log(Object.fromEntries(this.props.searchParams))} */}
                     <li
-                      className="cursor-pointer"
+                      className={
+                        Object.fromEntries(this.props.searchParams)
+                          .categories === ""
+                          ? "font-bold text-brown-cs cursor-pointer"
+                          : "text-grey-custom"
+                      }
                       onClick={this.paramsFavorite}>
                       Favorite & Promo
                     </li>
-                    <li className="cursor-pointer" onClick={this.paramsCoffe}>
+                    <li
+                      className={
+                        Object.fromEntries(this.props.searchParams)
+                          .categories === "1"
+                          ? "font-bold text-brown-cs cursor-pointer"
+                          : "text-grey-custom"
+                      }
+                      onClick={this.paramsCoffe}>
                       Coffee
                     </li>
                     <li
-                      className="cursor-pointer"
+                      className={
+                        Object.fromEntries(this.props.searchParams)
+                          .categories === "2"
+                          ? "font-bold text-brown-cs cursor-pointer"
+                          : "text-grey-custom"
+                      }
                       onClick={this.paramsNonCoffe}>
                       Non Coffee
                     </li>
-                    <li className="cursor-pointer" onClick={this.paramsFoods}>
+                    <li className={Object.fromEntries(this.props.searchParams).categories === "3" ? 'font-bold text-brown-cs cursor-pointer' : 'text-grey-custom'} onClick={this.paramsFoods}>
                       Foods
                     </li>
-                    <li className="cursor-pointer" onClick={this.paramsAddOn}>
+                    <li className={Object.fromEntries(this.props.searchParams).categories === "4" ? 'font-bold text-brown-cs cursor-pointer' : 'text-grey-custom'} onClick={this.paramsAddOn}>
                       Add-on
                     </li>
                   </ul>
@@ -348,8 +367,14 @@ class Products extends Component {
                       ) : (
                         <>
                           <div className="flex items-center m-auto justify-center w-full absolute">
-                            <p className='text-center pl-24 font-bold font-xl'>Product Tidak Ditemukan</p>
-                            <button className="btn m-auto absolute" onClick={this.handleReset}>Reset</button>
+                            <p className="text-center pl-24 font-bold font-xl">
+                              Product Tidak Ditemukan
+                            </p>
+                            <button
+                              className="btn m-auto absolute"
+                              onClick={this.handleReset}>
+                              Reset
+                            </button>
                           </div>
                         </>
                       )}

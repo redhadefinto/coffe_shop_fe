@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Footer from '../../components/Footer/'
 import { forgot, getOtp } from '../../utils/https/auth';
+import { useNavigate } from 'react-router-dom';
+import Loaders from '../../components/Loaders';
 
 function Forgot() {
   const controller = useMemo(() => new AbortController(), []);
@@ -11,20 +13,22 @@ function Forgot() {
     code_otp: "",
     password: "",
   });
-
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate()
   const onChange = (event) => {
     setEmail(event.target.value);
   };
 
   const emailSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(email);
+    // console.log(email);
+    setIsLoading(true)
     getOtp(email, controller)
       .then((res) => {
         console.log(res.data);
         setTimeLeft(120);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err)).finally(() => setIsLoading(false))
   };
 
   useEffect(() => {
@@ -49,16 +53,24 @@ function Forgot() {
   };
   const otpSubmitHandler = (event) => {
     event.preventDefault();
+    setIsLoading(true);
     forgot(email, form.code_otp, form.password, controller)
       .then((res) => {
         console.log(res);
         setTimeLeft(0);
+        navigate('/login')
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false))
   };
     return (
       <>
         <main>
+          {isLoading && (
+            <div className="absolute w-full h-screen flex justify-center items-center bg-[rgba(0,0,0,.5)]">
+              <Loaders />
+            </div>
+          )}
           <div className="bg-forgot min-h-screen text-white bg-cover bg-center bg-no-repeat">
             <section className="bg-[rgba(0,0,0,.5)] h-screen">
               <div className="h-screen flex flex-col justify-center items-center">

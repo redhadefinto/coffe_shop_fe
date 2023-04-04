@@ -24,9 +24,6 @@ function Profile () {
   const controller = React.useMemo(() => new AbortController());
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.data.token);
-  // const id = useSelector((state) => state.auth.data.id)
-  // const isLoading = useSelector((state) => console.log(state.profile.isLoading))
-  // console.log(isLoading)
   const navigate = useNavigate();
   const [fileInput, setFileInput] = useState(false)
   const [fileValue, setFileValue] = useState()

@@ -27,7 +27,7 @@ function History() {
   // console.log(isLoading)
   return (
     <>
-      <HeaderBase />
+      <HeaderBase title="history" />
       <main className="w-full min-h-screen py-6 lg:px-12 lg:py-24 lg:gap-12 bg-history bg-cover bg-center">
         <section className="modal hidden" id="modal">
           <div className="modal-content" id="modal-content">

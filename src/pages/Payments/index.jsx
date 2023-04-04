@@ -125,7 +125,7 @@ const handleTransactions = (e) => {
     // console.log(onCart)
     return (
       <>
-        <HeaderBase />
+        <HeaderBase title="cart" />
         {isLoading ? (
           <div className="h-[100vh] w-full">
             <div className="flex items-center absolute justify-center h-full w-full z-20 bg-[rgba(0,0,0,.4)]">
