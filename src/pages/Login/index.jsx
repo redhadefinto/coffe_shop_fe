@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Footer from '../../components/Footer';
 // import Header from '../../components/Header';
 import background from '../../assets/login/background.webp'
@@ -11,58 +11,53 @@ import { useEffect } from 'react';
 import {  useDispatch } from "react-redux";
 // import { counterAction } from "../../redux/slices/counter";
 import { authAction } from "../../redux/slices/auth";
+import Loaders from '../../components/Loaders';
 // import { profileAction } from '../../redux/slices/profile';
 // import jwt  from 'jsonwebtoken';
 // import { isExpired, decodeToken } from "react-jwt";
 
 function Login() {
-  const controller = React.useMemo(() => new AbortController());
+  const controller = React.useMemo(() => new AbortController(), []);
   const navigate = useNavigate()
   // const [email, setEmail] = React.useState("");
   // const [pwd, setPwd] = React.useState("");
   // const data = useSelector((state) => state);
   const dispatch = useDispatch();
+  const [msg, setMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+   const [isWrong, setIsWrong] = useState(false);
   const [form, setForm] = React.useState({
     email: "",
     password: "",
   })
   const loginHandler = (e) => {
     e.preventDefault();
-    // login(form.email, form.password, controller).then((res) => {
-    //   // console.log(res.data)
-    //   const key = "coffeshop-token"
-    //   const token = res.data.token
-    //   save(key, token);
-    //   console.log(res.data)
-    //   const image = res.data.image;
-    //   const id = res.data.id
-    //   console.log(image, id)
-    //   // console.log(res.data)
-    //   // eslint-disable-next-line no-undef
-    //   // const jwtSecret = `${process.env.JWT_SECRET}`
-    //   // const myDecodedToken = decodeToken(token);
-    //   // const isMyTokenExpired = isExpired(token);
-    //   // console.log(myDecodedToken, isMyTokenExpired)
-    // }).catch((err) => console.log(err));
-    // console.log(form.password)
-    try {
+        if (form.email === "" || form.password === "") {
+          setMsg("Input Empty !");
+          setIsWrong(true);
+          return;
+        }
       dispatch(
         authAction.getAuthThunk(
           { email: form.email, password: form.password },
           controller
         )
-      );
-      // const controller = React.useMemo(() => new AbortController());
-      // const dispatch = useDispatch();
-      // dispatch(profileAction.getProfileThunk({ controller, token }));
-      navigate("/");
-    } catch (error) {
-      console.log(error)
-    } finally {
-      console.log('siap')
-    }
+      ).then((result) => {
+        if (result.payload.message === "Request failed with status code 401") {
+          setIsLoading(false);
+          setMsg("Email / Password is Invalid !");
+          setIsWrong(true);
+          setForm({ ...form, password: "" });
+        }
+        console.log(result);
+        if (result.payload && result.payload.token) {
+          setIsLoading(false);
+          navigate("/");
+        }
+      }).catch((err) => console.log(err))
   };
   useEffect(() => {
+    document.title = 'Login'
     return () => {
       controller.abort();
     };
@@ -81,6 +76,9 @@ function Login() {
     return (
       <>
         <main>
+          {isLoading && (
+                <Loaders />
+          )}
           <div className="lg:flex lg:flex-wrap">
             <section className="hidden lg:block lg:flex-[2] lg:bg-cover">
               <img src={background} alt="background-benner" height="120vh" />
@@ -89,7 +87,9 @@ function Login() {
               <div className="bg-[rgba(0,0,0,.5)] min-h-[100vh] py-8 pb-16 lg:bg-white">
                 <div className="flex text-white font-bold lg:text-dark-blue-cs">
                   <div className="logo flex-1 flex items-center">
-                    <Link className='flex items-center pl-8 gap-1 md:pl-12 w-max' to="/">
+                    <Link
+                      className="flex items-center pl-8 gap-1 md:pl-12 w-max"
+                      to="/">
                       <img src={logo} alt="logo" />
                       <h1 className="logo-title text-xl md:text-2xl">
                         Coffe Shop
@@ -112,7 +112,7 @@ function Login() {
                       type="text"
                       placeholder="Enter your email adress"
                       className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom mb-8"
-                      name='email'
+                      name="email"
                       value={form.email}
                       onChange={onChangeForm}
                     />
@@ -121,10 +121,13 @@ function Login() {
                       type="password"
                       placeholder="Enter your password"
                       className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom mb-8"
-                      name='password'
+                      name="password"
                       value={form.password}
                       onChange={onChangeForm}
                     />
+                    {isWrong && (
+                      <p className='font-bold text-2xl text-red-700'>{msg}</p>
+                    )}
                     <Link
                       to="/forgot"
                       className="block mb-8 lg:text-brown-cs lg:font-bold">

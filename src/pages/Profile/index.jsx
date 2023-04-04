@@ -16,6 +16,7 @@ import {uploadImage, patchProfile} from '../../utils/https/profile'
 import { changePassword, logOut } from "../../utils/https/auth";
 // import Modal from "../../components/Modal";
 import "../../styles/products.css";
+import { cartActions } from "../../redux/slices/cart";
 // import { set } from "lodash";
 // import { set } from "lodash";
 
@@ -27,7 +28,7 @@ function Profile () {
   // const isLoading = useSelector((state) => console.log(state.profile.isLoading))
   // console.log(isLoading)
   const navigate = useNavigate();
-  const [fileInput, setFileInput] = useState(true)
+  const [fileInput, setFileInput] = useState(false)
   const [fileValue, setFileValue] = useState()
   const [isLoading, setIsLoading] = useState(false)
   const [genderUpdate, setgenderUpdate] = useState()
@@ -43,6 +44,7 @@ function Profile () {
   let datas;
   useEffect(() => {
     // const controller = new AbortController();
+    document.title = 'Profile'
     dispatch(profileAction.getProfileThunk({controller, token}))
     return () => {
       controller.abort();
@@ -146,6 +148,7 @@ function Profile () {
   const logOutHandler = (e) => {
     e.preventDefault()
     logOut(token, controller);
+    dispatch(cartActions.resetCart());
     dispatch(authAction.filter())
     navigate('/')
   }
@@ -155,7 +158,7 @@ function Profile () {
       <main className="bg-profile w-full h-max flex justify-center min-h-screen">
         <div className="w-full mx-4 justify-center items-center h-full flex flex-col md:w-full">
           {isLoading && (
-            <div className="h-[330vh] lg:h-[160vh] w-full absolute">
+            <div className="min-h-[330vh] lg:min-h-[160vh] w-full absolute">
               <div className="flex items-center absolute justify-center h-full w-full z-20 bg-[rgba(0,0,0,.4)]">
                 <Loading />
               </div>

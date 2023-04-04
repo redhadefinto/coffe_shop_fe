@@ -1,16 +1,64 @@
-import React, { Component } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Footer from "../../components/Footer";
 // import Header from '../../components/Header';
 import background from "../../assets/login/background.webp";
 import logo from "../../assets/Logo/logo-coffe.svg";
 import google from "../../assets/Medsos/google.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { register } from '../../utils/https/auth';
+import Loaders from '../../components/Loaders';
 
-export class SignUp extends Component {
-  render() {
+function SignUp () {
+    const controller = useMemo(() => new AbortController(), []);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(false)
+    const navigate = useNavigate()
+    const [msgError, setMsgError] = useState()
+    const [form, setForm] = useState({
+      email: "",
+      password: "",
+      phone_number: "",
+    });
+
+    const onChangeForm = (event) => {
+      setForm((form) => {
+        return {
+          ...form,
+          [event.target.name]: event.target.value,
+        };
+      });
+    };
+
+    const registerHandler = (event) => {
+      event.preventDefault();
+      console.log(form)
+      if(form.email === "" || form.password === "" || form.phone_number === "") {
+        setError(true)
+        setMsgError(`Input can't be empty`)
+        return;
+      }
+      setIsLoading(true);
+      register(form.email, form.password, form.phone, controller)
+        .then(() => {
+          setIsLoading(false);
+          // console.log(res.data);
+          navigate('/login')
+        })
+        .catch((err) => console.log(err));
+    };
+    useEffect(() => {
+      document.title = "Sign Up";
+    }, []);
     return (
       <>
-        <main className="font-rubik">
+        <main className="font-rubik min-h-screen w-full">
+          {isLoading && (
+            <div className="min-h-screen w-full flex justify-center items-center absolute">
+              <div className="flex items-center absolute justify-center h-[130vh] lg:h-[180vh] w-full z-20 bg-[rgba(0,0,0,.4)]">
+                <Loaders />
+              </div>
+            </div>
+          )}
           <div className="lg:flex lg:flex-wrap">
             <section className="hidden lg:block lg:flex-[9] lg:bg-cover bg-center lg:bg-white">
               <img src={background} alt="background-benner" />
@@ -45,27 +93,40 @@ export class SignUp extends Component {
                       placeholder="Enter your email adress"
                       className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom"
                       id="login"
+                      name="email"
+                      defaultValue={form.email}
+                      onChange={onChangeForm}
                     />
                     <p className="error mb-8 mt-4" id="email-error"></p>
                     <p className="mb-2 font-semibold">Password : </p>
                     <input
                       type="password"
+                      name="password"
                       placeholder="Enter your password"
                       className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom"
                       id="password"
+                      defaultValue={form.password}
+                      onChange={onChangeForm}
                     />
                     <p className="mt-4 mb-8" id="password-error"></p>
                     <p className="mb-2 font-semibold">Phone Number : </p>
                     <input
-                      type="password"
+                      type="number"
                       placeholder="Enter your password"
                       className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom"
-                      id="password"
+                      // id="password"
+                      name="phone_number"
+                      defaultValue={form.phone}
+                      onChange={onChangeForm}
                     />
-                    <p className="mt-4 mb-8" id="password-error"></p>
+                    {error && (
+                      <p className="font-bold text-2xl my-4 bg-red-700">
+                        {msgError}
+                      </p>
+                    )}
                     <button
-                      className="bg-btn-yellow text-brown-cs mb-4 font-bold w-full py-3 text-xl px-8 rounded-2xl hover:cursor-pointer hover:bg-[#a18818] hover:text-white"
-                      >
+                      className="bg-btn-yellow mt-8 text-brown-cs mb-4 font-bold w-full py-3 text-xl px-8 rounded-2xl hover:cursor-pointer hover:bg-[#a18818] hover:text-white"
+                      onClick={registerHandler}>
                       Sign Up
                     </button>
                   </form>
@@ -106,7 +167,6 @@ export class SignUp extends Component {
         <Footer />
       </>
     );
-  }
 }
 
 export default SignUp

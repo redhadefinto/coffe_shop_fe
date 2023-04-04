@@ -42,7 +42,12 @@ const router = createBrowserRouter([
   },
   { path: "/products", element: <Products /> },
   { path: "/app", element: <App name="Fazztrack" age={18} /> },
-  { path: "/products/:id", element: <ProductDetail /> },
+  { path: "/products/:id", element: (
+      <PrivateRoute >
+          <ProductDetail />
+        </PrivateRoute>
+    )
+      },
   {
     path: "/history",
     element: (

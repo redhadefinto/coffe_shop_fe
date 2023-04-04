@@ -28,7 +28,8 @@ function Forgot() {
   };
 
   useEffect(() => {
-    console.log(timeLeft)
+    // console.log(timeLeft)
+    document.title = 'Forgot Password ?'
     const interval = setInterval(() => {
       setTimeLeft((prevTime) => prevTime - 1);
     }, 1000);

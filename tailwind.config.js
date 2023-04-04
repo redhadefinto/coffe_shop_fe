@@ -25,7 +25,9 @@ module.exports = {
         "promo-1": "url('/src/assets/Promo/promo-1.png')",
         "promo-2": "url('/src/assets/Promo/promo-2.png')",
         "promo-4": "url('/src/assets/Promo/promo-4.png')",
-        profile: "url('/src/assets/Profile/background.webp')"
+        profile: "url('/src/assets/Profile/background.webp')",
+        trash: "url('/src/assets/History/trash.svg')",
+        x: "url('/src/assets/History/x.svg')"
       },
       fontFamily: {
         rubik: "'Rubik', sans-serif",

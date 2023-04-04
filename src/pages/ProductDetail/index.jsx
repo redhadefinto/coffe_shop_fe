@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import HeaderBase from "../../components/HeaderBase";
 import Footer from "../../components/Footer/index";
 // import image from "../../assets/ProductDetail/coffe detail.png";
@@ -6,47 +6,93 @@ import plus from "../../assets/Vektor/+.png";
 import minus from "../../assets/Vektor/-.png";
 import { getProductsDetail } from '../../utils/https/Products'
 import { useSelector, useDispatch } from 'react-redux'
-import { counterAction } from '../../redux/slices/counter'
-import { usersAction } from "../../redux/slices/users";
+import { cartActions } from "../../redux/slices/cart";
+import { useNavigate } from "react-router-dom";
+import Loaders from "../../components/Loaders";
+// import { cartActions } from '../../redux/slices/cart'
+// import { usersAction } from "../../redux/slices/users";
 // import { isInteger } from "lodash";
 // import Loaders from "../../components/Loaders";
 
+// eslint-disable-next-line react/prop-types
 function Details() {
-  const [datas, setData] = React.useState([])
+  const [datas, setDatas] = useState([])
+  const navigate = useNavigate()
+  // const [data, setData] = useState()
   const controller = new AbortController()
-  const id = window.location.pathname
-  const counter = useSelector(state => state.counter)
+  // const id = useSelector(state => state.auth.data.id)
+  const url = window.location.pathname;
+  const id = url.match(/\d+/)[0]
+  // const counter = useSelector(state => state.cart)
+  const selectedDelivery = useSelector((state) => state.cart.delivery);
+  const [selectedSize, setSelectedSize] = useState("Regular");
+  const [isLoading, setIsLoading] = useState(false)
+  // const [dataProduct, setDataProduct] = useState()
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
-  // console.log(counter);
-  const addCounter = () => {
-    dispatch(counterAction.increment())
-  }
-  const subCounter = () => {
-    if(counter.number == 0) return;
-    dispatch(counterAction.decrement())
-  }
+  // console.log(id)
   useEffect(() => {
-    // function fecthData = () => {}
-    // this.setState({
-    //   isLoading: true,
-    // });
+    document.title = "Product Detail"
+    setIsLoading(true)
     getProductsDetail(controller, id)
       .then(({ data }) =>
-        setData(data.data)
+        setDatas(data.data)
       )
       .catch((err) => console.log(err))
-    
-      // .finally(() =>
-      //   // this.setState({
-      //   //   isLoading: false,
-      //   // })
-      // );
-      dispatch(usersAction.getUsersThunk(controller)); 
-  }, [])
-  return (
+      .finally(() => {
+        setIsLoading(false)
+      })
+      }, [])
+      // console.log(datas)
+const changeSize = (event) => {
+  setSelectedSize(event.target.value);
+  console.log(selectedSize);  
+};
+const changeDelivery = (event) => {
+  // setSelectedDelivery(event.target.value);
+  // console.log(selectedDelivery);
+  dispatch(cartActions.deliveryMethod(event.target.value));
+};
+const plusQty = () => {
+  const newQty = qty + 1;
+  setQty(newQty);
+};
+const minQty = () => {
+  if (qty === 0) return;
+  const newQty = qty - 1;
+  setQty(newQty);
+};
+console.log(selectedDelivery);
+      return (
     <>
       <HeaderBase />
-      {datas.map((data) => {
+      {/* {console.log(datas)} */}
+      {isLoading ? (
+            <div className="h-[100vh] w-full">
+              <div className="flex items-center absolute justify-center h-full w-full z-20 bg-[rgba(0,0,0,.4)]">
+                <Loaders />
+              </div>
+            </div>
+      ): datas.map((data) => {
+          // setDataProduct(data)
+          const addtoCartHandler = () => {
+            const subtotal = data.price * qty;
+            const img = data.image;
+            const prodName = data.product_name;
+            const cart = { id, img, prodName, selectedSize, qty, subtotal };
+            dispatch(cartActions.addtoCart(cart));
+          };
+          const checkoutHandler = () => {
+            if(qty === 0) {
+              return;
+            }
+            if(!selectedDelivery) {
+              return;
+            }
+            addtoCartHandler();
+            navigate("/payments");
+          };
+          // console.log(data)
         return (
           <main className="bg-abu inset-0 pb-[270px] px-6" key={data.id}>
             <section className="title pl-[10%] pt-12 text-xl">
@@ -63,7 +109,7 @@ function Details() {
                 <div className="box-coffee flex flex-col justify-center items-center">
                   <div className="img-coffee mb-11">
                     <img
-                      className="rounded-full  xl:w-[400px] xl:h-[400px]"
+                      className="rounded-full"
                       src={data.image}
                       alt=""
                     />
@@ -77,7 +123,9 @@ function Details() {
                     </p>
                   </div>
                   <div className="left-button flex flex-col gap-5 lg:mt-[5%]">
-                    <button className="w-[380px] h-[85px] bg-brown-cs text-white text-[25px] font-bold flex justify-center items-center rounded-[20px] cursor-pointer">
+                    <button
+                      className="w-[380px] h-[85px] bg-brown-cs text-white text-[25px] font-bold flex justify-center items-center rounded-[20px] cursor-pointer"
+                      onClick={addtoCartHandler}>
                       Add to Cart
                     </button>
                     <button className="w-[380px] h-[85px] bg-btn-yellow text-[#6A4029] text-[25px] font-bold flex justify-center items-center rounded-[20px] cursor-pointer">
@@ -121,6 +169,8 @@ function Details() {
                           type="radio"
                           name="size"
                           id="r"
+                          value="Regular"
+                          onChange={changeSize}
                           className=" appearance-none"
                         />
                         R
@@ -133,6 +183,8 @@ function Details() {
                           type="radio"
                           name="size"
                           id="l"
+                          value="Large"
+                          onChange={changeSize}
                           className="appearance-none"
                         />
                         L
@@ -145,6 +197,8 @@ function Details() {
                           type="radio"
                           name="size"
                           id="xl"
+                          value="Extra Large"
+                          onChange={changeSize}
                           className="appearance-none"
                         />
                         XL
@@ -163,20 +217,37 @@ function Details() {
                         type="radio"
                         id="btn1"
                         name="method"
-                        className="checked: bg-secondary"
+                        className="checked:bg-secondary"
+                        value="Dine In"
+                        onChange={changeDelivery}
+                        checked={selectedDelivery === "Dine In"}
                       />
                       <label
                         htmlFor="btn1"
                         className=" px-4 py-3 text-[#9f9f9f] border-2 border-solid flex justify-center items-center bg-white cursor-pointer text-xl checked:bg-secondary w-28  rounded-[10px] text-center">
                         Dine In
                       </label>
-                      <input type="radio" id="btn2" name="method" />
+                      <input
+                        type="radio"
+                        id="btn2"
+                        name="method"
+                        value="Door Delivery"
+                        onChange={changeDelivery}
+                        checked={selectedDelivery === "Door Delivery"}
+                      />
                       <label
                         htmlFor="btn2"
                         className=" px-4 py-3 text-[#9f9f9f] border-2 border-solid flex justify-center items-center bg-white cursor-pointer text-xl checked:bg-secondary w-28  rounded-[10px] text-center md:w-[169px]">
                         Door Delivery
                       </label>
-                      <input type="radio" id="btn3" name="method" />
+                      <input
+                        type="radio"
+                        id="btn3"
+                        name="method"
+                        value="Pick Up"
+                        onChange={changeDelivery}
+                        checked={selectedDelivery === "Pick Up"}
+                      />
                       <label
                         htmlFor="btn3"
                         className=" px-4 py-3 text-[#9f9f9f] border-2 border-solid flex justify-center items-center bg-white cursor-pointer text-xl checked:bg-secondary w-28  rounded-[10px] text-center">
@@ -198,7 +269,7 @@ function Details() {
               </div>
             </section>
             <section className="checkout relative flex justify-between items-center md:mb-20 lg:mb-32">
-              <div className="card flex flex-col md:flex-row w-4/5 rounded-[20px] absolute justify-between items-center top-[35px] md:top-[175px] left-[10%] gap-8 md:gap-8">
+              <div className="card flex flex-col md:flex-row w-4/5 rounded-[20px] absolute justify-between items-center top-[35px] md:top-[100px] left-[10%] gap-8 md:gap-8">
                 <div className="  bg-white flex justify-between h-[90px] p-4 w-full md:h-[8.5rem] lg:h-[10.5rem] md:p-[1rem] lg:p-11 rounded-[20px] items-center shadow-xl">
                   <div className="product-coffee flex gap-[1.5rem] items-center ">
                     <div className="img-product">
@@ -217,23 +288,24 @@ function Details() {
                         </p>
                       </div>
                       <p className="sizet text-[10px] md:text-[20px] md:leading-6">
-                        x1 (Large) <br />
-                        x1 (Regular)
+                        x{qty} ({selectedSize})
                       </p>
                     </div>
                   </div>
                   <div className="add-amount flex justify-center items-center gap-3">
                     <button
                       className="minus flex bg-[#E7AA36] w-7 h-7 md:w-[40px] md:h-[40px] rounded-full justify-center items-center cursor-pointer"
-                      onClick={subCounter}>
-                        <img src={minus} alt="" width="10" height="10" />
+                      name={data.product_name}
+                      onClick={minQty}>
+                      <img src={minus} alt="" width="10" height="10" />
                     </button>
                     <p className="amount text-2xl font-bold">
-                      {counter.number}
+                      {qty}
                     </p>
                     <button
                       className="plus flex bg-[#E7AA36] h-7 w-7 md:w-[40px] md:h-[40px] rounded-full justify-center items-center cursor-pointer"
-                      onClick={addCounter}>
+                      name={data.product_name}
+                      onClick={plusQty}>
                       <img
                         src={plus}
                         alt=""
@@ -246,7 +318,9 @@ function Details() {
                 </div>
 
                 <div className="button-checkout">
-                  <button className=" w-[150px] h-[80px]  p-2  md:w-[155px] shadow-xl lg:w-64 md:h-[8.5rem] lg:h-[10.5rem] md:text-[25px] left-[10%] bottom-[10%] border-none bg-btn-yellow font-bold text-[#6A4029] rounded-[20px]">
+                  <button
+                    className=" w-[150px] h-[80px]  p-2  md:w-[155px] shadow-xl lg:w-64 md:h-[8.5rem] lg:h-[10.5rem] md:text-[25px] left-[10%] bottom-[10%] border-none bg-btn-yellow font-bold text-[#6A4029] rounded-[20px]"
+                    onClick={checkoutHandler}>
                     CHECKOUT
                   </button>
                 </div>
@@ -254,7 +328,8 @@ function Details() {
             </section>
           </main>
         );
-      })}
+        })
+      }
       <Footer />
     </>
   );

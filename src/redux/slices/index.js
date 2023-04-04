@@ -1,17 +1,21 @@
 import { combineReducers } from "@reduxjs/toolkit"; 
 
-import counterSlice from './counter'
+import cartSlice from './cart'
 import userSlice from './users'
 import authSlice from './auth'
 import profileSlice from "./profile";
+import transactionsSlice from "./transactions";
 // import profilePatchSlice from './profilePatch'
 import profileUpdateSlice from './profileUpdate'
+import historySlice from "./history";
 const reducers = combineReducers({
-  counter: counterSlice,
+  cart: cartSlice,
   userPlaceHolder: userSlice,
   auth: authSlice,
   profile: profileSlice,
-  profileUpdate: profileUpdateSlice
+  profileUpdate: profileUpdateSlice,
+  transactions: transactionsSlice,
+  history: historySlice
 })
 
 export default reducers;

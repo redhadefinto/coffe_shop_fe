@@ -167,27 +167,21 @@ class Products extends Component {
               data: data.data,
               meta: data.meta,
             })
-          // console.log(data)
         )
         .catch((err) => console.log(err))
         .finally(() =>
           this.setState({
             isLoading: false,
           }),
-          // console.log("sesudah update " + this.state.meta)
         );
     }
-    // console.log("No Change");
   }
   async componentDidMount() {
-    // function fecthData = () => {}
-    // console.log(window.location.href)
-    // window.location.href = this.props.searchParams
+    document.title = "Products"
     this.setState({
       isLoading: true,
       data: [],
     });
-    // const params = Object.fromEntries(this.props.searchParams);
     this.props.setSearchParams({
       // ...params,
       limit: this.state.limit,
@@ -197,12 +191,8 @@ class Products extends Component {
       .then(
         ({ data }) =>
           this.setState({
-            // isLoading: true,
             data: data.data,
-            // meta: data.meta,
           })
-        // console.log(data.meta)
-        // console.log(data)
       )
       .catch((err) => console.log(err))
       .finally(
@@ -210,17 +200,12 @@ class Products extends Component {
           this.setState({
             isLoading: false,
           }),
-        // console.log("sebelum update " + this.state.meta)
       );
   }
   handlemeta = (e) => {
     const params = Object.fromEntries(this.props.searchParams);
-    // console.log(e.target.value.map((e) => console.log(e)))
-    // console.log(e.target.value)
     const page = e.target.value[0];
     const limit = e.target.value[2];
-    // console.log('page' + page)
-    // console.log('limit' + limit)
     this.props.setSearchParams({
       ...params,
       page,
@@ -235,8 +220,6 @@ class Products extends Component {
     })
   }
   render() {
-    // console.log(Object.fromEntries(this.props.searchParams));
-    // console.log(this.state.meta)
     return (
       <>
         <HeaderBase searchValue={this.handleSearch} />
@@ -386,7 +369,7 @@ class Products extends Component {
                   )}
                 </div>
                 <div className="w-full flex justify-center gap-8 my-12 pr-8">
-                  {console.log(this.state.meta)}
+                  {/* {console.log(this.state.meta)} */}
                   {this.state.meta ? (
                     <>
                       {this.state.meta.prev ? (

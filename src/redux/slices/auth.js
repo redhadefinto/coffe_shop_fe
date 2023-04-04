@@ -16,7 +16,7 @@ const initialState = {
 const getAuthThunk = createAsyncThunk(
   "auth/post",
   async ({ email, password }, controller) => {
-    // const controller = new AbortController();
+    // const contr  oller = new AbortController();
     try {
       // console.log(response.data)
       // console.log(email);
@@ -33,11 +33,8 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    filter: (prevState) => {
-      return {
-        ...prevState,
-        data: [],
-      };
+    filter: () => {
+      return initialState;
     },
     // updateProfile: (prevState) => {
     //   return {

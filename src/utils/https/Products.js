@@ -12,7 +12,8 @@ export const getProducts = (controller, querys) => {
 
 export const getProductsDetail = (controller, id) => {
   const url = process.env.REACT_APP_SERVER_HOST
-  return axios.get(`${url}${id}`, {
+  console.log(id)
+  return axios.get(`${url}/products/${id}`, {
     signal: controller.signal
   })
 }

@@ -21,7 +21,8 @@ function HeaderBase({ searchValue }) {
   const [search, setSearch] = useState('')
   const [navOpen, setNavOpen] = useState(false)
   const token = useSelector((state) => state.auth.data.token);
-  // const profileImage = useSelector((state) => state.auth.data.image)
+  const cartState = useSelector((state) => state.cart.shoppingCart.length);
+  // console.log(cartState.length)
   const dataProfileImage = useSelector((state) => state.profile.data.data)
   const toggleSidebar = () => {
     navOpen == false ? setNavOpen(true) : setNavOpen(false);
@@ -73,15 +74,23 @@ function HeaderBase({ searchValue }) {
             <nav className="flex-[2] hidden lg:flex">
               <ul className="flex gap-8 items-center justify-center w-full font-bold text-dark-blue-cs xl:gap-12">
                 <li>
-                  {/* <a href="" className="">
-                    Home
-                  </a> */}
                   <Link to="/">Home</Link>
                 </li>
                 <li>
                   <Link to="/products?page=1&limit=8">Products</Link>
                 </li>
-                <li>Your Cart</li>
+                <div className="relative">
+                  {token ? (
+                    <>
+                      <Link to="/payments">Your Cart</Link>
+                      <p className="absolute bg-brown-cs rounded-full w-[20px] h-[20px] flex justify-center items-center top-[-40%] right-[-30%] text-white">
+                      {cartState}
+                      </p>
+                    </>
+                  ): (
+                    <Link to="/payments">Your Cart</Link>
+                  )}
+                </div>
                 <li>
                   <Link to="/history">History</Link>
                 </li>
@@ -155,7 +164,7 @@ function HeaderBase({ searchValue }) {
                 <ul className="flex justify-center flex-col items-center gap-4 font-bold text-xl">
                   <Link to="/">Home</Link>
                   <Link to="/products?page=1&limit=8">Product</Link>
-                  <li>Your Cart</li>
+                  <Link to="/payments">Your Cart</Link>
                   <Link to="/history">History</Link>
                 </ul>
               </nav>
@@ -205,14 +214,10 @@ function HeaderBase({ searchValue }) {
               id="hidden-nav">
               <nav className="navLink-hidden">
                 <ul className="flex justify-center flex-col items-center gap-4 font-bold text-xl">
-                  <li>Home</li>
-                  <li>
-                    <a href="./ProductCust/index.html">Product</a>
-                  </li>
-                  <li>Your Cart</li>
-                  <li>
-                    <a href="../HistoryCust/index.html">History</a>
-                  </li>
+                  <Link to="/">Home</Link>
+                  <Link to="/products?page=1&limit=8">Product</Link>
+                  <Link to="/payments">Your Cart</Link>
+                  <Link to="/history">History</Link>
                 </ul>
               </nav>
               <section>

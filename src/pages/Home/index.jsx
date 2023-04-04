@@ -25,7 +25,7 @@ import HeaderBase from '../../components/HeaderBase';
 
 function Home() {
     // const tokenFromLS = get('coffeshop-token');
-    const controller = React.useMemo(() => new AbortController());
+    const controller = React.useMemo(() => new AbortController(), []);
     const dispatch = useDispatch();
     const token = useSelector((state) => state.auth.data.token);
     useEffect(() => {
