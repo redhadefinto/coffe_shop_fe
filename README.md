@@ -76,7 +76,7 @@
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
+## Desc
 
 Our coffee shop web application brings the delightful experience of a café to your screen. Discover an extensive menu of coffee and tea specialties, explore personalized recommendations, place orders with ease, and enjoy the convenience of online payment and delivery options. Immerse yourself in a virtual coffee shop ambiance, where you can connect with fellow coffee enthusiasts, learn about the origins of different brews, and stay updated on upcoming events and promotions. Whether you're seeking a quick pick-me-up or a relaxing coffee break, our web application ensures a seamless and enjoyable coffee shop experience from the comfort of your own device.
 
@@ -88,7 +88,7 @@ Our coffee shop web application brings the delightful experience of a café to y
 
 Redha Definto - redhadefinto28@gmail.com
 
-Project Link: [https://github.com/redhadefinto/fazzpay](https://github.com/redhadefinto/fazzpay)
+Project Link: [https://github.com/redhadefinto/coffe_shop_fe](https://github.com/redhadefinto/coffe_shop_fe)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
