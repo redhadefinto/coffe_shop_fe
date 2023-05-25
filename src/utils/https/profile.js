@@ -15,7 +15,9 @@ export const getProfile = (controller, token) => {
 
 export const uploadImage = (img, token, controller) => {
   const fromData = new FormData();
+  console.log(img);
   fromData.append("image", img);
+  console.log(fromData);
   const url = `${baseUrl}/cloud/user`;
   return axios.post(url, fromData, {
     signal: controller.signal,
@@ -25,20 +27,20 @@ export const uploadImage = (img, token, controller) => {
   });
 };
 
-export const patchProfile = ({form, token, controller}, genderUpdate) => {
+export const patchProfile = ({ form, token, controller }, genderUpdate) => {
   // console.log(form)
   // console.log(filevalue)
   // console.log(genderUpdate)
   const url = `${baseUrl}/profile`;
-  let body = {...form}
-  if(genderUpdate) {
-    const gender = genderUpdate.gender
+  let body = { ...form };
+  if (genderUpdate) {
+    const gender = genderUpdate.gender;
     body = {
       ...form,
-      gender
-    }
+      gender,
+    };
   }
-  console.log(body)
+  console.log(body);
   // console.log(form)
   // const formData = new FormData();
   // if(filevalue) {

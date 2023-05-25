@@ -1,36 +1,34 @@
 /* eslint-disable no-undef */
-import axios from "axios"
+import axios from "axios";
 // import { transform } from "lodash";
 
 const baseUrl = `${process.env.REACT_APP_SERVER_HOST}`;
 // import { get } from '../localStorage'
 
-
 export const login = (email, password, controller) => {
   // console.log(email, password
   const body = {
-    email, 
+    email,
     password,
-  }
+  };
   const url = `${baseUrl}/auth`;
-  return axios.post(url, body,
-  {
+  return axios.post(url, body, {
     signal: controller.signal,
   });
-}
+};
 
 export const register = (email, password, phoneNumber, controller) => {
   const body = {
     email,
     password,
-    phoneNumber
-  }
+    phoneNumber,
+  };
   // console.log(body)
   const url = `${baseUrl}/auth/register`;
   return axios.post(url, body, {
-    signal: controller.signal
-  })
-}
+    signal: controller.signal,
+  });
+};
 
 export const getOtp = (email, controller) => {
   const url = `${baseUrl}/auth/otp`;
@@ -46,14 +44,18 @@ export const forgot = (email, code_otp, password, controller) => {
 
 export const logOut = (token, controller) => {
   const url = `${baseUrl}/auth/logout`;
-  return axios.patch(url, {}, {
-    signal: controller.signal,
-    headers: { Authorization: `Bearer ${token}` },
-  });
-}
+  return axios.patch(
+    url,
+    {},
+    {
+      signal: controller.signal,
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+};
 
 export const changePassword = (body, token, controller) => {
-  console.log(body)
+  console.log(body);
   const url = `${baseUrl}/auth`;
   return axios.patch(url, body, {
     signal: controller.signal,

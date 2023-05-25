@@ -17,6 +17,7 @@ import { changePassword, logOut } from "../../utils/https/auth";
 // import Modal from "../../components/Modal";
 import "../../styles/products.css";
 import { cartActions } from "../../redux/slices/cart";
+import { parseInt } from "lodash";
 // import { set } from "lodash";
 // import { set } from "lodash";
 
@@ -144,6 +145,7 @@ function Profile () {
 
   const logOutHandler = (e) => {
     e.preventDefault()
+    setIsLoading(true)
     logOut(token, controller);
     dispatch(cartActions.resetCart());
     dispatch(authAction.filter())
@@ -176,6 +178,8 @@ function Profile () {
               const day = ("0" + date.getDate()).slice(-2);
               const formattedDate = `${year}-${month}-${day}`;
               const gender = datas.gender;
+              const number = parseInt(datas.phone_number)
+              {console.log(number)}
               return (
                 <>
                   <h1 className="font-medium text-4xl text-white py-10 lg:text-start">
@@ -297,7 +301,7 @@ function Profile () {
                               name="phone_number"
                               onChange={handleForm}
                               disabled={editContact}
-                              defaultValue={datas.phone_number}
+                              defaultValue={parseInt(datas.phone_number)}
                               className="mt-2 min-h-12 border-b-2 border-solid border-black focus:outline-none"
                             />
                           </div>

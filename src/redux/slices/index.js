@@ -6,14 +6,13 @@ import authSlice from './auth'
 import profileSlice from "./profile";
 import transactionsSlice from "./transactions";
 // import profilePatchSlice from './profilePatch'
-import profileUpdateSlice from './profileUpdate'
+// import profileUpdateSlice from './profileUpdate'
 import historySlice from "./history";
 const reducers = combineReducers({
   cart: cartSlice,
   // userPlaceHolder: userSlice,
   auth: authSlice,
   profile: profileSlice,
-  profileUpdate: profileUpdateSlice,
   transactions: transactionsSlice,
   history: historySlice
 })

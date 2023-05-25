@@ -7,6 +7,7 @@ import google from "../../assets/Medsos/google.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from '../../utils/https/auth';
 import Loaders from '../../components/Loaders';
+// import { parseInt } from 'lodash';
 
 function SignUp () {
     const controller = useMemo(() => new AbortController(), []);
@@ -38,7 +39,10 @@ function SignUp () {
         return;
       }
       setIsLoading(true);
-      register(form.email, form.password, form.phone, controller)
+      console.log(form)
+      // parseInt(form.phone_number)
+      // parseInt(form.phone_number)
+      register(form.email, form.password, form.phone_number, controller)
         .then(() => {
           setIsLoading(false);
           // console.log(res.data);
@@ -117,7 +121,7 @@ function SignUp () {
                       className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom"
                       // id="password"
                       name="phone_number"
-                      defaultValue={form.phone}
+                      defaultValue={form.phone_number}
                       onChange={onChangeForm}
                     />
                     {error && (
