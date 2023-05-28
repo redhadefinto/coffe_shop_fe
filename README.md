@@ -1,6 +1,7 @@
 ## Readme Top
 
 <div align="center">
+<img width="50" src="./public/logo.png" alt="logo">
 <h3 align="center">Coffe Shop</h3>
 
   <p align="center">
