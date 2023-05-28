@@ -1,17 +1,17 @@
 /* eslint-disable react/prop-types */
-import React, { Component } from 'react'
-import HeaderBase from '../../components/HeaderBase'
-import Footer from '../../components/Footer'
-import CardPromo from '../../components/CardPromo';
-import CardProduct from '../../components/CardProduct'
-import WithSearchParams from '../../utils/wrapper/WithSearchParams'
-import { getProducts } from '../../utils/https/Products'
-import Loaders from '../../components/Loaders/'
-import _ from 'lodash'
+import React, { Component } from "react";
+import HeaderBase from "../../components/HeaderBase";
+import Footer from "../../components/Footer";
+import CardPromo from "../../components/CardPromo";
+import CardProduct from "../../components/CardProduct";
+import WithSearchParams from "../../utils/wrapper/WithSearchParams";
+import { getProducts } from "../../utils/https/Products";
+import Loaders from "../../components/Loaders/";
+import _ from "lodash";
 // import Loaders from '../../components/Loaders/index';
 import withNavigate from "../../utils/wrapper/WithNavigate";
-import '../../styles/products.css';
-import { Link } from 'react-router-dom';
+import "../../styles/products.css";
+import { Link } from "react-router-dom";
 // import ProductsDetail from '../ProductDetail'
 
 class Products extends Component {
@@ -24,14 +24,14 @@ class Products extends Component {
       meta: {
         totalData: 13,
         next: {
-          page: '2',
-          limit: '8'
+          page: "2",
+          limit: "8",
         },
         prev: null,
-        totalPage: 2
+        totalPage: 2,
       },
       page: 1,
-      isActive: ''
+      isActive: "",
     };
     this.controller = new AbortController();
   }
@@ -157,28 +157,27 @@ class Products extends Component {
         data: [],
         meta: {
           page: 2,
-          limit: 8
-        }
+          limit: 8,
+        },
       });
       await getProducts(this.controller, this.props.searchParams)
-        .then(
-          ({ data }) =>
-            this.setState({
-              // isLoading: true,
-              data: data.data,
-              meta: data.meta,
-            })
+        .then(({ data }) =>
+          this.setState({
+            // isLoading: true,
+            data: data.data,
+            meta: data.meta,
+          })
         )
         .catch((err) => console.log(err))
         .finally(() =>
           this.setState({
             isLoading: false,
-          }),
+          })
         );
     }
   }
   async componentDidMount() {
-    document.title = "Products"
+    document.title = "Products";
     this.setState({
       isLoading: true,
       data: [],
@@ -189,18 +188,16 @@ class Products extends Component {
       page: this.state.page,
     });
     await getProducts(this.controller, this.props.searchParams)
-      .then(
-        ({ data }) =>
-          this.setState({
-            data: data.data,
-          })
+      .then(({ data }) =>
+        this.setState({
+          data: data.data,
+        })
       )
       .catch((err) => console.log(err))
-      .finally(
-        () =>
-          this.setState({
-            isLoading: false,
-          }),
+      .finally(() =>
+        this.setState({
+          isLoading: false,
+        })
       );
   }
   handlemeta = (e) => {
@@ -217,9 +214,9 @@ class Products extends Component {
   handleReset = () => {
     this.props.setSearchParams({
       page: 1,
-      limit: 8
-    })
-  }
+      limit: 8,
+    });
+  };
   render() {
     return (
       <>
@@ -308,7 +305,7 @@ class Products extends Component {
                         Object.fromEntries(this.props.searchParams)
                           .categories === ""
                           ? "font-bold text-brown-cs cursor-pointer"
-                          : "text-grey-custom"
+                          : "text-grey-custom cursor-pointer"
                       }
                       onClick={this.paramsFavorite}>
                       Favorite & Promo
@@ -318,7 +315,7 @@ class Products extends Component {
                         Object.fromEntries(this.props.searchParams)
                           .categories === "1"
                           ? "font-bold text-brown-cs cursor-pointer"
-                          : "text-grey-custom"
+                          : "text-grey-custom cursor-pointer"
                       }
                       onClick={this.paramsCoffe}>
                       Coffee
@@ -328,24 +325,38 @@ class Products extends Component {
                         Object.fromEntries(this.props.searchParams)
                           .categories === "2"
                           ? "font-bold text-brown-cs cursor-pointer"
-                          : "text-grey-custom"
+                          : "text-grey-custom cursor-pointer"
                       }
                       onClick={this.paramsNonCoffe}>
                       Non Coffee
                     </li>
-                    <li className={Object.fromEntries(this.props.searchParams).categories === "3" ? 'font-bold text-brown-cs cursor-pointer' : 'text-grey-custom'} onClick={this.paramsFoods}>
+                    <li
+                      className={
+                        Object.fromEntries(this.props.searchParams)
+                          .categories === "3"
+                          ? "font-bold text-brown-cs cursor-pointer"
+                          : "text-grey-custom cursor-pointer"
+                      }
+                      onClick={this.paramsFoods}>
                       Foods
                     </li>
-                    <li className={Object.fromEntries(this.props.searchParams).categories === "4" ? 'font-bold text-brown-cs cursor-pointer' : 'text-grey-custom'} onClick={this.paramsAddOn}>
+                    <li
+                      className={
+                        Object.fromEntries(this.props.searchParams)
+                          .categories === "4"
+                          ? "font-bold text-brown-cs cursor-pointer"
+                          : "text-grey-custom cursor-pointer"
+                      }
+                      onClick={this.paramsAddOn}>
                       Add-on
                     </li>
                   </ul>
-                  <div>
+                  <div className="mt-8">
                     <select
                       className="border-b-2 border-solid border-brown-cs cursor-pointer font-semibold text-brown-cs"
                       onChange={this.sortingRequest}
                       defaultValue="default">
-                      <option value="default">Default</option>
+                      <option value="default">Sort ?</option>
                       <option value="priciest">priciest</option>
                       <option value="cheapest">cheapest</option>
                     </select>

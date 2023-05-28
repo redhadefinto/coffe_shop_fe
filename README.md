@@ -28,7 +28,8 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
-    <li><a href="#license">License</a></li>
+    <li><a href="#Documentation">Documentation</a></li>
+    <li><a href="#Contributor">Contributor</a></li>
   </ol>
 </details>
 
@@ -102,11 +103,31 @@ Project Link: [https://github.com/redhadefinto/coffe_shop_fe](https://github.com
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- LICENSE -->
+## Documentation
 
-## License
+<img width="500" src="./public/landing-page.png" alt="Landing page">
+<img width="500" src="./public/login-page.png" alt="Landing page">
+<img width="500" src="./public/profile-page.png" alt="Landing page">
+<img width="500" src="./public/product-page.png" alt="Landing page">
+<img width="500" src="./public/order-page.png" alt="Landing page">
 
-© [Redha Definto](https://github.com/redhadefinto)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- Contributor -->
+
+## Contributor
+
+  <table>
+    <tr>
+      <td >
+        <a href="https://github.com/redhadefinto">
+          <img width="100" src="https://avatars.githubusercontent.com/u/66767762?s=400&u=00ad08bd394a1ba0fe65d9b61cbef4245df96fb4&v=4" alt=""><br/>
+          <center><sub><b>Redha Definto </b></sub></center>
+        </a>
+        </td>
+    </tr>
+  </table>
+<h1 align="center"> THANK FOR YOUR ATTENTION </h1>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

@@ -79,7 +79,7 @@ function Login() {
     <>
       <main>
         {isLoading && (
-          <div className="absolute w-full h-screen flex justify-center items-center bg-[rgba(0,0,0,.5)]">
+          <div className="fixed top-0 right-0 w-full h-screen flex justify-center items-center bg-[rgba(0,0,0,.5)]">
             <Loaders />
           </div>
         )}
