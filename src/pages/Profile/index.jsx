@@ -3,16 +3,16 @@ import React, { useState } from "react";
 import Header from "../../components/HeaderBase";
 import Footer from "../../components/Footer";
 // import picture from '../../assets/Header/profile.svg'
-import iconPensil from '../../assets/Profile/iconPen.svg'
+import iconPensil from "../../assets/Profile/iconPen.svg";
 // import '../../styles/Profile.css'
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {profileAction}  from '../../redux/slices/profile'
-import { authAction } from '../../redux/slices/auth'
+import { profileAction } from "../../redux/slices/profile";
+import { authAction } from "../../redux/slices/auth";
 import { useNavigate } from "react-router-dom";
-import Loading from '../../components/Loaders'
+import Loaders from "../../components/Loaders";
 // import { profileUpdateAction } from "../../redux/slices/profileUpdate";
-import {uploadImage, patchProfile} from '../../utils/https/profile'
+import { uploadImage, patchProfile } from "../../utils/https/profile";
 import { changePassword, logOut } from "../../utils/https/auth";
 // import Modal from "../../components/Modal";
 import "../../styles/products.css";
@@ -21,29 +21,29 @@ import { parseInt } from "lodash";
 // import { set } from "lodash";
 // import { set } from "lodash";
 
-function Profile () {
+function Profile() {
   const controller = React.useMemo(() => new AbortController());
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.data.token);
   const navigate = useNavigate();
-  const [fileInput, setFileInput] = useState(false)
-  const [fileValue, setFileValue] = useState()
-  const [isLoading, setIsLoading] = useState(false)
-  const [genderUpdate, setgenderUpdate] = useState()
-  const [showModal, setShowModal] = useState(false)
-  const [oldPassword, setOldPassword] = useState()
-  const [newPassword, setNewPassword] = useState()
-  const [error, setError] = useState(false)
-  const [msgError, setMsgError] = useState()
-  const [editContact, setEditContact] = useState(true)
-  const [editDetails, setEditDetails] = useState(true)
+  const [fileInput, setFileInput] = useState(false);
+  const [fileValue, setFileValue] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [genderUpdate, setgenderUpdate] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [oldPassword, setOldPassword] = useState();
+  const [newPassword, setNewPassword] = useState();
+  const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState();
+  const [editContact, setEditContact] = useState(true);
+  const [editDetails, setEditDetails] = useState(true);
   const dataArray = useSelector((state) => state.profile.data.data);
   // const isLoading = useSelector((state) => state.profile.isLoading)
   let datas;
   useEffect(() => {
     // const controller = new AbortController();
-    document.title = 'Profile'
-    dispatch(profileAction.getProfileThunk({controller, token}))
+    document.title = "Profile";
+    dispatch(profileAction.getProfileThunk({ controller, token }));
     return () => {
       controller.abort();
     };
@@ -52,30 +52,30 @@ function Profile () {
   const handleGender = (e) => {
     // e.preventDefault()
     setgenderUpdate({
-      gender: e.target.id
-    })
-  }
+      gender: e.target.id,
+    });
+  };
   const fileInputHandler = (e) => {
-    e.preventDefault()
-    setFileInput(fileInput === false ? true : false)
-    setMsgError()
-  }
+    e.preventDefault();
+    setFileInput(fileInput === false ? true : false);
+    setMsgError();
+  };
   const updateFile = (e) => {
     e.preventDefault();
     const uploadedFile = e.target.files;
     setFileValue(uploadedFile.length ? uploadedFile[0] : null);
   };
   const handleForm = (e) => {
-    e.preventDefault()
-      setForm((form) => {
-        return { ...form, [e.target.name]: e.target.value };
-      });
-  }
+    e.preventDefault();
+    setForm((form) => {
+      return { ...form, [e.target.name]: e.target.value };
+    });
+  };
   const handleSave = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // console.log(form)
     setIsLoading(true);
-    if(genderUpdate) {
+    if (genderUpdate) {
       patchProfile({ form, token, controller }, genderUpdate)
         .then(() =>
           dispatch(profileAction.getProfileThunk({ controller, token }))
@@ -84,36 +84,41 @@ function Profile () {
         .finally(() => {
           setIsLoading(false);
         });
-      }
-      patchProfile({ form, token, controller })
-        .then(() =>
-          dispatch(profileAction.getProfileThunk({ controller, token }))
-        )
-        .catch((err) => console.log(err))
-        .finally(() => {
-          setIsLoading(false);
-        });
-  }
+    }
+    patchProfile({ form, token, controller })
+      .then(() =>
+        dispatch(profileAction.getProfileThunk({ controller, token }))
+      )
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
   const handleCancel = (e) => {
-    e.preventDefault()
-    window.location.reload()
-  }
+    e.preventDefault();
+    window.location.reload();
+  };
   const updateProfile = (e) => {
-    e.preventDefault()
-    if(!fileValue) {
-      setError(true)
-      setMsgError('Masukan Gambar!!!')
+    e.preventDefault();
+    if (!fileValue) {
+      setError(true);
+      setMsgError("Masukan Gambar!!!");
       return;
     }
-    setFileInput(false)
-    setIsLoading(true)
-    uploadImage(fileValue, token, controller).then(() => dispatch(profileAction.getProfileThunk({controller, token}))).catch((err) => console.log(err)).finally(() => {
-      setIsLoading(false)
-    })
-  }
+    setFileInput(false);
+    setIsLoading(true);
+    uploadImage(fileValue, token, controller)
+      .then(() =>
+        dispatch(profileAction.getProfileThunk({ controller, token }))
+      )
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   const handleChangePassword = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // console.log(oldPassword)
     // console.log(newPassword)
     if (oldPassword == undefined || newPassword == undefined) {
@@ -123,51 +128,50 @@ function Profile () {
     }
     const body = {
       oldPass: oldPassword,
-      newPass: newPassword
-    }
-    setIsLoading(true)
-    changePassword(body, token, controller).then(() => {
-      setError(false)
-      setMsgError('')
-      logOut(token, controller)
-      dispatch(authAction.filter())
-      navigate('/')
-    }).catch(() => {
-      setError(true)
-      setMsgError("Old password is wrong");
-      setOldPassword('')
-      setNewPassword('')
-      return;
-    }).finally(() => {
-      setIsLoading(false)
-    })
-  }
+      newPass: newPassword,
+    };
+    setIsLoading(true);
+    changePassword(body, token, controller)
+      .then(() => {
+        setError(false);
+        setMsgError("");
+        logOut(token, controller);
+        dispatch(authAction.filter());
+        navigate("/");
+      })
+      .catch(() => {
+        setError(true);
+        setMsgError("Old password is wrong");
+        setOldPassword("");
+        setNewPassword("");
+        return;
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   const logOutHandler = (e) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
     logOut(token, controller);
     dispatch(cartActions.resetCart());
-    dispatch(authAction.filter())
-    navigate('/')
-  }
+    dispatch(authAction.filter());
+    navigate("/");
+  };
   return (
     <>
       <Header />
       <main className="bg-profile w-full h-max flex justify-center min-h-screen">
         <div className="w-full mx-4 justify-center items-center h-full flex flex-col md:w-full">
           {isLoading && (
-            <div className="min-h-[330vh] lg:min-h-[160vh] w-full absolute">
-              <div className="flex items-center absolute justify-center h-full w-full z-20 bg-[rgba(0,0,0,.4)]">
-                <Loading />
-              </div>
+            <div className="fixed top-0 right-0 w-full h-screen flex justify-center items-center bg-[rgba(0,0,0,.5)]">
+              <Loaders />
             </div>
           )}
           {!dataArray ? (
-            <div className="h-[200vh] lg:h-[100vh] w-full flex justify-center items-center absolute">
-              <div className="flex items-center absolute top-[50%] justify-center h-[100vh] w-full z-20 bg-[rgba(0,0,0,.4)]">
-                <Loading />
-              </div>
+            <div className="fixed top-0 right-0 w-full h-screen flex justify-center items-center bg-[rgba(0,0,0,.5)]">
+              <Loaders />
             </div>
           ) : (
             (() => {
@@ -178,8 +182,10 @@ function Profile () {
               const day = ("0" + date.getDate()).slice(-2);
               const formattedDate = `${year}-${month}-${day}`;
               const gender = datas.gender;
-              const number = parseInt(datas.phone_number)
-              {console.log(number)}
+              const number = parseInt(datas.phone_number);
+              {
+                console.log(number);
+              }
               return (
                 <>
                   <h1 className="font-medium text-4xl text-white py-10 lg:text-start">
@@ -532,7 +538,9 @@ function Profile () {
           {showModal ? (
             <div className="h-[330vh] lg:h-[160vh] w-full absolute">
               <div className="flex items-end pb-16 absolute justify-center h-full w-full z-10 bg-[rgba(0,0,0,.4)]">
-                <form className="w-[80%] h-[25%] md:w-[60%] md:h-[30%] lg:w-[40%] lg:h-[60%] bg-[rgba(255,255,255,9)] rounded-2xl flex flex-col py-8 px-12 gap-4" onSubmit={handleChangePassword}>
+                <form
+                  className="w-[80%] h-[25%] md:w-[60%] md:h-[30%] lg:w-[40%] lg:h-[60%] bg-[rgba(255,255,255,9)] rounded-2xl flex flex-col py-8 px-12 gap-4"
+                  onSubmit={handleChangePassword}>
                   <p className="font-bold text-2xl text-dark-blue-cs">
                     Change Password
                   </p>
@@ -545,7 +553,7 @@ function Profile () {
                     type="password"
                     className="border-b-2 border-solid border-dark-blue-cs focus:outline-none w-[80%]"
                     value={oldPassword}
-                    onChange={((e) => setOldPassword(e.target.value))}
+                    onChange={(e) => setOldPassword(e.target.value)}
                   />
                   <label
                     htmlFor=""
@@ -556,10 +564,12 @@ function Profile () {
                     type="password"
                     className="border-b-2 border-solid border-dark-blue-cs focus:outline-none w-[80%]"
                     value={newPassword}
-                    onChange={((e) => setNewPassword(e.target.value))}
+                    onChange={(e) => setNewPassword(e.target.value)}
                   />
                   <div className="mt-12 gap-8 flex justify-center items-center">
-                    <button type="submit" className="rounded-xl w-[50%] py-3 text-dark-blue-cs font-bold border-2 border-solid border-brown-cs hover:bg-btn-yellow hover:text-brown-cs hover:transition-all hover:duration-500">
+                    <button
+                      type="submit"
+                      className="rounded-xl w-[50%] py-3 text-dark-blue-cs font-bold border-2 border-solid border-brown-cs hover:bg-btn-yellow hover:text-brown-cs hover:transition-all hover:duration-500">
                       Save
                     </button>
                     <button
@@ -567,17 +577,21 @@ function Profile () {
                       onClick={(e) => {
                         e.preventDefault();
                         setShowModal(false);
-                        setError(false)
-                        setMsgError()
+                        setError(false);
+                        setMsgError();
                       }}>
                       Cancel
                     </button>
                   </div>
-                    {error ? (
-                      <div className="mt-4 flex items-center justify-center">
-                        <p className="font-bold text-red-600 text-xl">{msgError}</p>
-                      </div>
-                    ): false}
+                  {error ? (
+                    <div className="mt-4 flex items-center justify-center">
+                      <p className="font-bold text-red-600 text-xl">
+                        {msgError}
+                      </p>
+                    </div>
+                  ) : (
+                    false
+                  )}
                 </form>
               </div>
             </div>

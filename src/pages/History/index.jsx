@@ -18,10 +18,13 @@ function History() {
   const [isLoading, setIsLoading] = useState(true);
   const token = useSelector((state) => state.auth.data.token);
   useEffect(() => {
-    document.title = "History"
-    setIsLoading(true)
-    getHistory(token, controller).then(({data}) => setDataHistory(data.data)).catch((err) => console.log(err)).finally(() => setIsLoading(false))
-  }, [])
+    document.title = "History";
+    setIsLoading(true);
+    getHistory(token, controller)
+      .then(({ data }) => setDataHistory(data.data))
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
+  }, []);
   // console.log(state);
   // console.log(dataHistory);
   // console.log(isLoading)
@@ -55,10 +58,8 @@ function History() {
         </div>
 
         {!dataHistory || isLoading ? (
-          <div className="h-screen w-full px-0 py-0">
-            <div className="flex items-center justify-center h-full w-full z-20">
-              <Loaders />
-            </div>
+          <div className="fixed top-0 right-0 w-full h-screen flex justify-center items-center bg-[rgba(0,0,0,.5)]">
+            <Loaders />
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-5 place-items-center md:grid-cols-2 lg:grid-cols-3 lg:gap-8">

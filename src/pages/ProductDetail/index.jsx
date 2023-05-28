@@ -66,10 +66,8 @@ function Details() {
       <HeaderBase />
       {/* {console.log(datas)} */}
       {isLoading ? (
-        <div className="h-[100vh] w-full">
-          <div className="flex items-center absolute justify-center h-full w-full z-20 bg-[rgba(0,0,0,.4)]">
-            <Loaders />
-          </div>
+        <div className="fixed top-0 right-0 w-full h-screen flex justify-center items-center bg-[rgba(0,0,0,.5)]">
+          <Loaders />
         </div>
       ) : (
         datas.map((data) => {
