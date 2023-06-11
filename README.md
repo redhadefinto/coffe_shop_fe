@@ -39,9 +39,8 @@
 ## About The Project
 
 <!-- ![Product Name Screen Shot][product-screenshot] -->
-<img width="900" src="./public/index.png" alt="display-documentation">
 
-"Step into the world of aromatic bliss with our coffee shop application, where every sip is a virtual journey to a cozy café, delivering caffeine-powered joy to your fingertips."
+"Our coffee shop web application brings the delightful experience of a café to your screen. Discover an extensive menu of coffee and tea specialties, explore personalized recommendations, place orders with ease, and enjoy the convenience of online payment and delivery options. Immerse yourself in a virtual coffee shop ambiance, where you can connect with fellow coffee enthusiasts, learn about the origins of different brews, and stay updated on upcoming events and promotions. Whether you're seeking a quick pick-me-up or a relaxing coffee break, our web application ensures a seamless and enjoyable coffee shop experience from the comfort of your own device."
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -53,6 +52,23 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Features
+
+### Customer
+
+- Auth
+  - Login
+  - Logout
+  - Register
+  - Forgot Password
+- User
+  - Edit Profile
+- Product
+- Promo
+- Transaction
+- History
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 <!-- GETTING STARTED -->
 
 ## Getting Started
@@ -76,15 +92,13 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
-
-## Desc
-
-Our coffee shop web application brings the delightful experience of a café to your screen. Discover an extensive menu of coffee and tea specialties, explore personalized recommendations, place orders with ease, and enjoy the convenience of online payment and delivery options. Immerse yourself in a virtual coffee shop ambiance, where you can connect with fellow coffee enthusiasts, learn about the origins of different brews, and stay updated on upcoming events and promotions. Whether you're seeking a quick pick-me-up or a relaxing coffee break, our web application ensures a seamless and enjoyable coffee shop experience from the comfort of your own device.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- CONTACT -->
+
+## ENV
+
+```sh
+  REACT_APP_SERVER_HOST
+```
 
 ## Contact
 

@@ -45,7 +45,6 @@ function SignUp() {
     register(form.email, form.password, form.phone_number, controller)
       .then(() => {
         setIsLoading(false);
-        // console.log(res.data);
         navigate("/login");
       })
       .catch((err) => console.log(err))
@@ -114,7 +113,7 @@ function SignUp() {
                   <p className="mt-4 mb-8" id="password-error"></p>
                   <p className="mb-2 font-semibold">Phone Number : </p>
                   <input
-                    type="number"
+                    type="text"
                     placeholder="Enter your password"
                     className="w-full px-4 py-4 rounded-lg font-bold text-black bg-[rgba(255,255,255,.7)] lg:border-2 lg:border-solid lg:border-grey-custom"
                     // id="password"

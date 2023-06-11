@@ -165,7 +165,7 @@ function Profile() {
       <main className="bg-profile w-full h-max flex justify-center min-h-screen">
         <div className="w-full mx-4 justify-center items-center h-full flex flex-col md:w-full">
           {isLoading && (
-            <div className="fixed top-0 right-0 w-full h-screen flex justify-center items-center bg-[rgba(0,0,0,.5)]">
+            <div className="fixed top-0 right-0 w-full h-screen flex z-50 justify-center items-center bg-[rgba(0,0,0,.5)]">
               <Loaders />
             </div>
           )}
@@ -182,10 +182,7 @@ function Profile() {
               const day = ("0" + date.getDate()).slice(-2);
               const formattedDate = `${year}-${month}-${day}`;
               const gender = datas.gender;
-              const number = parseInt(datas.phone_number);
-              {
-                console.log(number);
-              }
+              // const number = datas.phone_number;
               return (
                 <>
                   <h1 className="font-medium text-4xl text-white py-10 lg:text-start">
@@ -307,7 +304,7 @@ function Profile() {
                               name="phone_number"
                               onChange={handleForm}
                               disabled={editContact}
-                              defaultValue={parseInt(datas.phone_number)}
+                              defaultValue={datas.phone_number}
                               className="mt-2 min-h-12 border-b-2 border-solid border-black focus:outline-none"
                             />
                           </div>

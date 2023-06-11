@@ -17,11 +17,11 @@ export const login = (email, password, controller) => {
   });
 };
 
-export const register = (email, password, phoneNumber, controller) => {
+export const register = (email, password, phone_number, controller) => {
   const body = {
     email,
     password,
-    phoneNumber,
+    phone_number,
   };
   // console.log(body)
   const url = `${baseUrl}/auth/register`;
