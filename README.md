@@ -104,8 +104,6 @@
 
 Redha Definto - redhadefinto28@gmail.com
 
-Project Link: [https://github.com/redhadefinto/coffe_shop_fe](https://github.com/redhadefinto/coffe_shop_fe)
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
@@ -115,6 +113,20 @@ Project Link: [https://github.com/redhadefinto/coffe_shop_fe](https://github.com
 - [React](https://reactjs.org/)
 - [Tailwind](https://tailwindcss.com/)
 - [Redux](https://redux.js.org/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Deployment
+
+Project Link: [https://github.com/redhadefinto/coffe_shop_fe](https://github.com/redhadefinto/coffe_shop_fe)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Related Projects
+
+[Coffee-Shop Mobile](https://github.com/redhadefinto/coffeein_be)
+
+[Coffee-Shop Backend](https://github.com/redhadefinto/coffeein-mobile)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
