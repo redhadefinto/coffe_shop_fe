@@ -115,14 +115,14 @@ Project Link: [https://coffe-shop-fullstack.vercel.app/](https://coffe-shop-full
 ## Documentation
 
 <div>
-  <img width="300" src="./public/landing-page.png" alt="Landing page">
-  <img width="300" src="./public/login-page.png" alt="Landing page">
+  <img width="400" src="./public/landing-page.png" alt="Landing page">
+  <img width="400" src="./public/login-page.png" alt="Landing page">
 </div>
 <div>
-  <img width="300" src="./public/profile-page.png" alt="Landing page">
-  <img width="300" src="./public/product-page.png" alt="Landing page"> 
+  <img width="400" src="./public/profile-page.png" alt="Landing page">
+  <img width="400" src="./public/product-page.png" alt="Landing page"> 
 </div>
-<img width="300" src="./public/order-page.png" alt="Landing page">
+<img width="400" src="./public/order-page.png" alt="Landing page">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
