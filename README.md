@@ -97,22 +97,12 @@
 ## ENV
 
 ```sh
-  REACT_APP_SERVER_HOST
+  REACT_APP_SERVER_HOST = https://coffe-shop-gamma.vercel.app/
 ```
 
 ## Contact
 
 Redha Definto - redhadefinto28@gmail.com
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments
-
-- [React](https://reactjs.org/)
-- [Tailwind](https://tailwindcss.com/)
-- [Redux](https://redux.js.org/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -122,21 +112,25 @@ Project Link: [https://coffe-shop-fullstack.vercel.app/](https://coffe-shop-full
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Documentation
+
+<div>
+  <img width="500" src="./public/landing-page.png" alt="Landing page">
+  <img width="500" src="./public/login-page.png" alt="Landing page">
+</div>
+<div>
+  <img width="500" src="./public/profile-page.png" alt="Landing page">
+  <img width="500" src="./public/product-page.png" alt="Landing page"> 
+</div>
+<img width="500" src="./public/order-page.png" alt="Landing page">
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Related Projects
 
 [Coffee-Shop Mobile](https://github.com/redhadefinto/coffeein_be)
 
 [Coffee-Shop Backend](https://github.com/redhadefinto/coffeein-mobile)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Documentation
-
-<img width="500" src="./public/landing-page.png" alt="Landing page">
-<img width="500" src="./public/login-page.png" alt="Landing page">
-<img width="500" src="./public/profile-page.png" alt="Landing page">
-<img width="500" src="./public/product-page.png" alt="Landing page">
-<img width="500" src="./public/order-page.png" alt="Landing page">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
