@@ -108,7 +108,7 @@ Redha Definto - redhadefinto28@gmail.com
 
 ## Deployment
 
-Project Link: [https://coffe-shop-fullstack.vercel.app/](https://coffe-shop-fullstack.vercel.app/)
+Project Link: [Klick](https://coffe-shop-fullstack.vercel.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
