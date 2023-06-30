@@ -108,7 +108,7 @@ Redha Definto - redhadefinto28@gmail.com
 
 ## Deployment
 
-Project Link: [https://coffe-shop-fullstack.vercel.app/](https://coffe-shop-fullstack.vercel.app/)
+Project Link: [here](https://coffe-shop-fullstack.vercel.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -128,9 +128,9 @@ Project Link: [https://coffe-shop-fullstack.vercel.app/](https://coffe-shop-full
 
 ## Related Projects
 
-[Coffee-Shop Mobile](https://github.com/redhadefinto/coffeein_be)
+[Coffee-Shop Mobile](https://github.com/redhadefinto/coffeein-mobile)
 
-[Coffee-Shop Backend](https://github.com/redhadefinto/coffeein-mobile)
+[Coffee-Shop Backend](https://github.com/redhadefinto/coffeein_be)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
