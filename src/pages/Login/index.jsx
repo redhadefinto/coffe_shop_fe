@@ -169,7 +169,7 @@ function Login() {
                 Get your member <br /> card now!
               </h2>
               <p className="description card-description lg:text-grey-custom lg:font-semibold">
-                lets join with our member and enjoy the deals.
+                lets join with our member and enjoy the deals
               </p>
             </div>
             <button className="py-3 px-8 bg-btn-yellow rounded-lg text-brown-cs font-bold hover:bg-[#a18818] hover:text-white">
